@@ -4,7 +4,7 @@
 
 const LESSON_DESCRIPTIONS = {
   G1:  "Present Simple – odmiana i zastosowanie",
-  G2:  "Present Continuous – czynności trwające",
+  G2:  "Past tenses",
   G3:  "Past Simple – czasowniki regularne i nieregularne",
   G4:  "Past Continuous – tło i przerwane czynności",
   G5:  "Present Perfect – doświadczenia i skutki",
