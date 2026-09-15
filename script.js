@@ -6,175 +6,168 @@ const SECTIONS = { G: "Gramatyka", T: "Tematyka" };
 
 let currentSection = "G";
 let currentLesson = null;
-let currentPdfText = "";
-let voicesEn = [];
-let voicesPl = [];
 
 const $ = id => document.getElementById(id);
 
+/* ============================================================
+   KARTY LEKCJI
+============================================================ */
 function renderCards(section, filter = "") {
   const content = $("content");
   content.innerHTML = "";
+
   for (let i = 1; i <= 16; i++) {
-    const klucz = `${section}${i}`;
-    const d = (KONFIG.dzialy && KONFIG.dzialy[klucz]) || { nazwa: klucz, opis: "" };
-    const tytul = `${klucz} — ${d.nazwa}`;
-    if (filter && !tytul.toLowerCase().includes(filter.toLowerCase())) continue;
+    const title = `${section}${i} — ${SECTIONS[section]} ${i}`;
+    if (filter && !title.toLowerCase().includes(filter.toLowerCase())) continue;
+
+    const desc = (LESSON_DESCRIPTIONS[`${section}${i}`]) || "";
 
     const card = document.createElement("div");
     card.className = "card";
-    card.innerHTML = `<h3>${tytul}</h3><p class="desc">${d.opis}</p><div class="levels"></div>`;
-    const levelsDiv = card.querySelector(".levels");
+    card.innerHTML = `
+      <h3>${title}</h3>
+      <p class="desc">${desc}</p>
+      <div class="levels"></div>`;
 
+    const levelsDiv = card.querySelector(".levels");
     LEVELS.forEach(lvl => {
-      const ukryte = (KONFIG.ukryte || []).includes(
-        lvl === "TEST" ? `TEST${section}${i}` : `${section}${i}${lvl}`
-      );
       const btn = document.createElement("button");
-      btn.className = `level-btn ${lvl}${ukryte ? " hidden-lesson" : ""}`;
+      btn.className = `level-btn ${lvl}`;
       btn.textContent = lvl;
-      if (ukryte) { btn.disabled = true; }
-      else btn.onclick = () => openLesson(section, i, lvl);
+      btn.onclick = () => openLesson(section, i, lvl);
       levelsDiv.appendChild(btn);
     });
+
     content.appendChild(card);
   }
 }
 
+/* ============================================================
+   OTWIERANIE LEKCJI
+============================================================ */
 function openLesson(section, num, level) {
-  const fileName = level === "TEST" ? `TEST${section}${num}.pdf` : `${section}${num}${level}.pdf`;
+  const fileName = level === "TEST"
+    ? `TEST${section}${num}.pdf`
+    : `${section}${num}${level}.pdf`;
+
   currentLesson = { section, num, level, fileName };
-  currentPdfText = "";
-  const d = KONFIG.dzialy[`${section}${num}`] || {};
-  $("modalTitle").textContent = `${section}${num} (${level}) — ${d.nazwa || ""}`;
-  $("pdfPages").innerHTML = "";
-  $("textContent").innerHTML = "<p class='hint'>⏳ Ładowanie tekstu...</p>";
+
+  $("modalTitle").textContent =
+    `${fileName.replace(".pdf","")} — ${SECTIONS[section]} ${num} (${level})`;
+  $("pdfPages").innerHTML = "<p style='color:#64748b;padding:20px;text-align:center'>⏳ Ładowanie PDF...</p>";
   $("modal").classList.remove("hidden");
+
   loadDictionary(fileName);
   renderPDF(`pdf/${fileName}`);
 }
 
-function renderPDF(url) {
+/* ============================================================
+   RENDEROWANIE PDF (jako obraz + klikalna warstwa tekstowa)
+============================================================ */
+async function renderPDF(url) {
   const container = $("pdfPages");
   container.innerHTML = "";
-  const iframe = document.createElement("iframe");
-  iframe.src = url + "#toolbar=0&navpanes=0&view=FitH&statusbar=0";
-  iframe.style.cssText = "width:100%;height:100%;border:none;border-radius:8px;background:#fff;display:block;";
-  container.appendChild(iframe);
 
-  pdfjsLib.getDocument(url).promise
-    .then(pdf => Promise.all(
-      Array.from({ length: pdf.numPages }, (_, i) =>
-        pdf.getPage(i + 1).then(p => p.getTextContent()).then(c => c.items.map(x => x.str).join(" "))
-      )
-    ))
-    .then(pages => {
-      currentPdfText = pages.join("\n\n").replace(/\s+/g, " ").trim();
-      renderInteractiveText(pages);
-    })
-    .catch(e => {
-      $("textContent").innerHTML = `<p style="color:#ef4444">❌ Nie udało się wczytać PDF: ${e.message}</p>`;
-    });
-}
+  try {
+    const pdf = await pdfjsLib.getDocument(url).promise;
+    const scale = window.devicePixelRatio > 1 ? 1.5 : 1.3;
 
-function renderInteractiveText(pagesText) {
-  const panel = $("textContent");
-  panel.innerHTML = "";
-  pagesText.forEach(pageText => {
-    if (!pageText.trim()) return;
-    const p = document.createElement("p");
-    pageText.split(/(\s+)/).forEach(tok => {
-      if (/^\s+$/.test(tok)) { p.appendChild(document.createTextNode(" ")); return; }
-      const clean = tok.replace(/[^\w'’-]/g, "");
-      if (!clean) { p.appendChild(document.createTextNode(tok)); return; }
-      const span = document.createElement("span");
-      span.className = "word";
-      span.textContent = tok;
-      span.onclick = () => {
-        document.querySelectorAll(".word.speaking").forEach(el => el.classList.remove("speaking"));
-        span.classList.add("speaking");
-        speakEnglish(clean);
-        setTimeout(() => span.classList.remove("speaking"), 1500);
-      };
-      p.appendChild(span);
-    });
-    panel.appendChild(p);
-  });
-  if (!panel.children.length) panel.innerHTML = "<p class='hint'>PDF nie ma warstwy tekstowej.</p>";
+    for (let p = 1; p <= pdf.numPages; p++) {
+      const page = await pdf.getPage(p);
+      const viewport = page.getViewport({ scale });
+
+      const wrap = document.createElement("div");
+      wrap.className = "pdf-page-wrap";
+      wrap.style.width = viewport.width + "px";
+      wrap.style.height = viewport.height + "px";
+
+      const canvas = document.createElement("canvas");
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      wrap.appendChild(canvas);
+
+      const textLayer = document.createElement("div");
+      textLayer.className = "textLayer";
+      textLayer.style.width = viewport.width + "px";
+      textLayer.style.height = viewport.height + "px";
+      wrap.appendChild(textLayer);
+
+      container.appendChild(wrap);
+
+      // Renderowanie strony jako obraz
+      await page.render({
+        canvasContext: canvas.getContext("2d"),
+        viewport
+      }).promise;
+
+      // Warstwa tekstowa – klikalne słowa
+      const textContent = await page.getTextContent();
+      textContent.items.forEach(item => {
+        if (!item.str.trim()) return;
+
+        const tx = pdfjsLib.Util.transform(viewport.transform, item.transform);
+
+        const span = document.createElement("span");
+        span.textContent = item.str;
+        span.style.left = tx[4] + "px";
+        span.style.top = (tx[5] - item.height * scale) + "px";
+        span.style.fontSize = (item.height * scale) + "px";
+        span.style.fontFamily = "sans-serif";
+
+        span.onclick = (e) => {
+          e.stopPropagation();
+          speak(item.str.trim(), "en-US");
+        };
+
+        textLayer.appendChild(span);
+      });
+    }
+  } catch (e) {
+    console.error("Błąd PDF:", e);
+    container.innerHTML =
+      `<p style='color:#ef4444;padding:20px;text-align:center;line-height:1.6'>
+        ❌ Nie znaleziono pliku <b>${url}</b>.<br>
+        Sprawdź, czy PDF jest w folderze <code>pdf/</code> i nazywa się poprawnie.
+      </p>`;
+  }
 }
 
 /* ============================================================
-   LEKTOR – POPRAWIONY (przypisuje voice za każdym razem)
+   WEB SPEECH API
 ============================================================ */
-function getRate() { return parseFloat($("rate").value); }
-
-// Filtruje głosy "dziecięce" i słabe
-function isBadVoice(v) {
-  const n = (v.name || "").toLowerCase();
-  return n.includes("child") || n.includes("kid") || n.includes("junior");
+function getRate() {
+  return parseFloat($("rate").value);
 }
 
-function pickVoice(langPrefix, preferredName) {
-  const all = speechSynthesis.getVoices();
-  if (preferredName) {
-    const m = all.find(v => v.name === preferredName);
-    if (m) return m;
-  }
-  // szukaj dokładnego lang (np. pl-PL)
-  const exact = all.find(v => v.lang.toLowerCase() === langPrefix.toLowerCase() && !isBadVoice(v));
-  if (exact) return exact;
-  // szukaj prefiksu (np. pl)
-  const prefix = langPrefix.split("-")[0].toLowerCase();
-  const matched = all.filter(v => v.lang.toLowerCase().startsWith(prefix) && !isBadVoice(v));
-  return matched[0] || null;
-}
-
-function speakText(text, langKey) {
+function speak(text, lang = "en-US") {
   if (!text) return;
   speechSynthesis.cancel();
 
   const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang;
   u.rate = getRate();
 
-  let voice = null;
-  if (langKey === "en") {
-    voice = pickVoice("en-US", $("voiceEn").value)
-         || pickVoice("en-GB", $("voiceEn").value);
-    u.lang = voice?.lang || "en-US";
-  } else if (langKey === "pl") {
-    voice = pickVoice("pl-PL", $("voicePl").value);
-    u.lang = voice?.lang || "pl-PL";
-  }
-
-  // === NAJWAŻNIEJSZE: przypisz voice za każdym razem ===
-  if (voice) {
-    u.voice = voice;
-  } else if (langKey === "pl") {
-    alert("Brak głosu polskiego w systemie. Windows: Ustawienia → Czas i język → Mowa → Dodaj głosy → Polski.");
-    return;
-  }
+  const voices = speechSynthesis.getVoices();
+  const chosen = voices.find(v => v.name === $("voiceSelect").value);
+  if (chosen) u.voice = chosen;
 
   speechSynthesis.speak(u);
 }
 
-function speakEnglish(t) { speakText(t, "en"); }
-function speakPolish(t)  { speakText(t, "pl"); }
-window.speakEnglish = speakEnglish;
-window.speakPolish = speakPolish;
-
 function speakAllText() {
-  if (!currentPdfText) { alert("Poczekaj chwilę – jeszcze wczytuję tekst."); return; }
-  speakEnglish(currentPdfText);
+  const spans = [...document.querySelectorAll(".textLayer span")];
+  if (!spans.length) {
+    alert("Najpierw poczekaj aż PDF się załaduje.");
+    return;
+  }
+  const text = spans.map(s => s.textContent).join(" ");
+  speak(text);
 }
 
 function speakSelection() {
   const sel = window.getSelection().toString().trim();
-  if (!sel) {
-    alert("Zaznacz fragment w panelu „📝 Interaktywny tekst lekcji” i kliknij jeszcze raz.");
-    return;
-  }
-  const isPolish = /[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/.test(sel);
-  isPolish ? speakPolish(sel) : speakEnglish(sel);
+  if (sel) speak(sel, "en-US");
+  else alert("Najpierw zaznacz fragment tekstu w PDF.");
 }
 
 /* ============================================================
@@ -184,25 +177,33 @@ function loadDictionary(key) {
   const dict = JSON.parse(localStorage.getItem("dict") || "{}");
   renderWords(dict[key] || []);
 }
+
 function saveDictionary(key, arr) {
   const dict = JSON.parse(localStorage.getItem("dict") || "{}");
   dict[key] = arr;
   localStorage.setItem("dict", JSON.stringify(dict));
 }
+
 function renderWords(words) {
-  $("wordList").innerHTML = words.map((w, i) => {
-    const en = w.en.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
-    const pl = (w.pl || "").replace(/\\/g, "\\\\").replace(/'/g, "\\'");
-    return `<li>
+  $("wordList").innerHTML = words.map((w, i) => `
+    <li>
       <span><b>${w.en}</b> — <span class="pl">${w.pl}</span></span>
       <span class="btns">
-        <button class="icon-btn" onclick="speakEnglish('${en}')">🔊 EN</button>
-        ${w.pl && w.pl !== "—" ? `<button class="icon-btn pl" onclick="speakPolish('${pl}')">🔊 PL</button>` : ""}
-        <button class="icon-btn del" onclick="removeWord(${i})">✖</button>
+        <button class="icon-btn"
+          onclick="speak('${w.en.replace(/'/g, "\\'")}', 'en-US')"
+          title="Wymowa angielska">🔊 EN</button>
+        ${w.pl && w.pl !== "—"
+          ? `<button class="icon-btn"
+               onclick="speak('${w.pl.replace(/'/g, "\\'")}', 'pl-PL')"
+               title="Wymowa polska">🔊 PL</button>`
+          : ""}
+        <button class="icon-btn del" onclick="removeWord(${i})" title="Usuń">✖</button>
       </span>
-    </li>`;
-  }).join("");
+    </li>
+  `).join("");
 }
+
+window.speak = speak;
 window.removeWord = function(i) {
   const key = currentLesson.fileName;
   const dict = JSON.parse(localStorage.getItem("dict") || "{}");
@@ -213,55 +214,27 @@ window.removeWord = function(i) {
 };
 
 /* ============================================================
-   GŁOSY – POPRAWIONE (filtruje dziecięce, sortuje sensownie)
+   GŁOSY
 ============================================================ */
 function populateVoices() {
-  const all = speechSynthesis.getVoices();
-
-  voicesEn = all
-    .filter(v => v.lang.toLowerCase().startsWith("en") && !isBadVoice(v))
-    .sort((a, b) => {
-      // Priorytet: US > GB > inne
-      const prio = l => l === "en-us" ? 0 : l === "en-gb" ? 1 : 2;
-      const diff = prio(a.lang.toLowerCase()) - prio(b.lang.toLowerCase());
-      return diff !== 0 ? diff : a.name.localeCompare(b.name);
-    });
-
-  voicesPl = all
-    .filter(v => v.lang.toLowerCase().startsWith("pl") && !isBadVoice(v))
+  const voices = speechSynthesis.getVoices()
+    .filter(v => v.lang.startsWith("en"))
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  const enSel = $("voiceEn");
-  const plSel = $("voicePl");
+  $("voiceSelect").innerHTML = voices.map(v =>
+    `<option value="${v.name}">${v.name} (${v.lang})</option>`
+  ).join("");
 
-  const prevEn = enSel.value;
-  const prevPl = plSel.value;
-
-  enSel.innerHTML = voicesEn.length
-    ? voicesEn.map(v => `<option value="${v.name}">${v.name} (${v.lang})</option>`).join("")
-    : `<option value="">(brak głosu EN)</option>`;
-
-  plSel.innerHTML = voicesPl.length
-    ? voicesPl.map(v => `<option value="${v.name}">${v.name} (${v.lang})</option>`).join("")
-    : `<option value="">❌ brak głosu PL</option>`;
-
-  // Zachowaj poprzedni wybór jeśli nadal istnieje
-  if (prevEn && voicesEn.find(v => v.name === prevEn)) enSel.value = prevEn;
-  if (prevPl && voicesPl.find(v => v.name === prevPl)) plSel.value = prevPl;
+  // Domyślnie preferuj głos US
+  const us = voices.find(v => v.lang === "en-US");
+  if (us) $("voiceSelect").value = us.name;
 }
 
 /* ============================================================
    START
 ============================================================ */
 window.addEventListener("DOMContentLoaded", () => {
-  if (typeof KONFIG === "undefined") {
-    alert("❌ Brak pliku config.js");
-    return;
-  }
-  $("pageTitle").textContent = "🇬🇧 " + (KONFIG.tytul || "Angielski dla Polaków");
-  $("pageSubtitle").textContent = KONFIG.podtytul || "";
-  document.title = KONFIG.tytul || "Angielski";
-
+  // Zakładki
   document.querySelectorAll(".tab").forEach(tab => {
     tab.onclick = () => {
       document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
@@ -271,7 +244,10 @@ window.addEventListener("DOMContentLoaded", () => {
     };
   });
 
+  // Wyszukiwarka
   $("search").oninput = e => renderCards(currentSection, e.target.value);
+
+  // Modal PDF
   $("readAllBtn").onclick = speakAllText;
   $("readSelectionBtn").onclick = speakSelection;
   $("pausePdf").onclick = () => speechSynthesis.paused
@@ -283,16 +259,12 @@ window.addEventListener("DOMContentLoaded", () => {
     $("modal").classList.add("hidden");
     speechSynthesis.cancel();
   };
-  $("expandBtn").onclick = () =>
-    document.querySelector(".modal-content").classList.toggle("expanded");
 
-  // Ładuj głosy (Edge/Chrome czasem potrzebują kilku prób)
+  // Głosy
   speechSynthesis.onvoiceschanged = populateVoices;
-  populateVoices();
-  setTimeout(populateVoices, 200);
-  setTimeout(populateVoices, 800);
-  setTimeout(populateVoices, 2000);
+  setTimeout(populateVoices, 500);
 
+  // Dodawanie słowa ręcznie
   $("addWord").onclick = () => {
     const en = $("wordInput").value.trim();
     if (!en || !currentLesson) return;
@@ -305,13 +277,18 @@ window.addEventListener("DOMContentLoaded", () => {
     renderWords(dict[key]);
   };
 
+  // Dodawanie słowa z tłumaczeniem
   $("translateBtn").onclick = async () => {
     const en = $("wordInput").value.trim();
     if (!en || !currentLesson) return;
+
     try {
-      const r = await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(en)}&langpair=en|pl`);
+      const r = await fetch(
+        `https://api.mymemory.translated.net/get?q=${encodeURIComponent(en)}&langpair=en|pl`
+      );
       const d = await r.json();
       const pl = d.responseData.translatedText;
+
       const key = currentLesson.fileName;
       const dict = JSON.parse(localStorage.getItem("dict") || "{}");
       dict[key] = dict[key] || [];
@@ -319,12 +296,17 @@ window.addEventListener("DOMContentLoaded", () => {
       saveDictionary(key, dict[key]);
       $("wordInput").value = "";
       renderWords(dict[key]);
-    } catch (e) { alert("Błąd tłumaczenia."); }
+    } catch (e) {
+      alert("Nie udało się przetłumaczyć. Dodaj ręcznie przez ➕.");
+    }
   };
 
+  // Enter w polu słownika
   $("wordInput").addEventListener("keydown", e => {
     if (e.key === "Enter") $("translateBtn").click();
   });
+
+  // Esc zamyka modal
   document.addEventListener("keydown", e => {
     if (e.key === "Escape" && !$("modal").classList.contains("hidden")) {
       $("modal").classList.add("hidden");
@@ -332,5 +314,6 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Start
   renderCards("G");
 });
