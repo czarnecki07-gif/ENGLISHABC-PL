@@ -1,39 +1,50 @@
-// =======================================================
-// KONFIGURACJA – opisy lekcji
-// =======================================================
+/* ============================================================
+   KONFIGURACJA KURSU
+   ============================================================ */
 
-const LESSON_DESCRIPTIONS = {
-  G1:  "PRESENT TENSES",
-  G2:  "PAST TENSES",
-  G3:  "FUTURE FORMS",
-  G4:  "PAST TENSES",
-  G5:  "Present Perfect – doświadczenia i skutki",
-  G6:  "Future Simple i 'be going to' – plany",
-  G7:  "Czasowniki modalne: can, must, should",
-  G8:  "Rzeczowniki policzalne, some/any",
-  G9:  "Przedimki a / an / the",
-  G10: "Stopniowanie przymiotników i przysłówków",
-  G11: "Zaimki osobowe, dzierżawcze, zwrotne",
-  G12: "Przyimki miejsca i czasu (in, on, at)",
-  G13: "Mowa zależna – reported speech",
-  G14: "Strona bierna – passive voice",
-  G15: "Zdania warunkowe (0, 1, 2, 3)",
-  G16: "Phrasal verbs – czasowniki frazowe",
+const KONFIG = {
+  tytul: "Angielski dla Polaków",
+  podtytul: "Kurs A1 → C1 · 192 lekcje · Gramatyka i Tematyka",
 
-  T1:  "Przedstawianie się – powitania, imię, kraj",
-  T2:  "Rodzina i przyjaciele – opisy osób",
-  T3:  "Dom i mieszkanie – pomieszczenia, meble",
-  T4:  "Praca i zawody – rozmowa o pracy",
-  T5:  "Jedzenie i restauracja – zamawianie",
-  T6:  "Podróże i transport – lotnisko, dworzec",
-  T7:  "SZKOŁA, EDUKACJA I UCZENIE SIĘ",
-  T8:  "Zdrowie i ciało – u lekarza",
-  T9:  "Szkoła i edukacja – przedmioty, uczelnia",
-  T10: "Sport i hobby – czas wolny",
-  T11: "Pogoda i pory roku – prognoza",
-  T12: "Technologia i internet – komputer, telefon",
-  T13: "Emocje i uczucia – radość, smutek",
-  T14: "Podróże zagraniczne – hotel, kultura",
-  T15: "Praca i kariera – CV, rozmowa",
-  T16: "Kultura i sztuka – film, muzyka"
+  // Lista UKRYTYCH lekcji (np. "G16C1", "TESTG16")
+  // Zostaw pustą [], jeśli nic nie ukrywasz.
+  ukryte: [],
+
+  dzialy: {
+    /* ---- GRAMATYKA ---- */
+    G1:  { nazwa: "Present Simple",             opis: "Czas teraźniejszy prosty" },
+    G2:  { nazwa: "Present Continuous",         opis: "Czas teraźniejszy ciągły" },
+    G3:  { nazwa: "Past Simple",                opis: "Czas przeszły prosty" },
+    G4:  { nazwa: "Past Continuous",            opis: "Czas przeszły ciągły" },
+    G5:  { nazwa: "Present Perfect",            opis: "Czas teraźniejszy dokonany" },
+    G6:  { nazwa: "Future Simple",              opis: "Czas przyszły – will / going to" },
+    G7:  { nazwa: "Czasowniki modalne",         opis: "can, must, should" },
+    G8:  { nazwa: "Rzeczowniki policzalne",     opis: "some / any / much / many" },
+    G9:  { nazwa: "Przedimki",                  opis: "a / an / the" },
+    G10: { nazwa: "Stopniowanie",               opis: "Przymiotniki i przysłówki" },
+    G11: { nazwa: "Zaimki",                     opis: "Osobowe, dzierżawcze, zwrotne" },
+    G12: { nazwa: "Przyimki",                   opis: "in, on, at" },
+    G13: { nazwa: "Mowa zależna",               opis: "Reported speech" },
+    G14: { nazwa: "Strona bierna",              opis: "Passive voice" },
+    G15: { nazwa: "Zdania warunkowe",           opis: "Conditionals 0–3" },
+    G16: { nazwa: "Phrasal verbs",              opis: "Czasowniki frazowe" },
+
+    /* ---- TEMATYKA ---- */
+    T1:  { nazwa: "Przedstawianie się",         opis: "Powitania, imię, kraj" },
+    T2:  { nazwa: "Rodzina i przyjaciele",      opis: "Opisy osób" },
+    T3:  { nazwa: "Dom i mieszkanie",           opis: "Pomieszczenia, meble" },
+    T4:  { nazwa: "Praca i zawody",             opis: "Rozmowa o pracy" },
+    T5:  { nazwa: "Jedzenie i restauracja",     opis: "Zamawianie, menu" },
+    T6:  { nazwa: "Podróże i transport",        opis: "Lotnisko, dworzec" },
+    T7:  { nazwa: "Zakupy i pieniądze",         opis: "Ubrania, ceny" },
+    T8:  { nazwa: "Zdrowie i ciało",            opis: "U lekarza, apteka" },
+    T9:  { nazwa: "Szkoła i edukacja",          opis: "Przedmioty, uczelnia" },
+    T10: { nazwa: "Sport i hobby",              opis: "Czas wolny" },
+    T11: { nazwa: "Pogoda i pory roku",         opis: "Prognoza, klimat" },
+    T12: { nazwa: "Technologia i internet",     opis: "Komputer, telefon" },
+    T13: { nazwa: "Emocje i uczucia",           opis: "Radość, smutek, złość" },
+    T14: { nazwa: "Podróże zagraniczne",        opis: "Hotel, kultura" },
+    T15: { nazwa: "Praca i kariera",            opis: "CV, rozmowa kwalifikacyjna" },
+    T16: { nazwa: "Kultura i sztuka",           opis: "Film, muzyka, literatura" }
+  }
 };
