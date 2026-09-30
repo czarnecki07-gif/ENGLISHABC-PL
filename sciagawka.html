@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Angielski – Ściągawka A4</title>
+<style>
+  @page { size: A4; margin: 5mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 10pt;
+    line-height: 1.28;
+    color: #2c3e50;
+    background: #fff;
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 4mm 5mm;
+    display: flex;
+    flex-direction: column;
+    page-break-after: always;
+    overflow: hidden;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid #7e93af;
+    padding-bottom: 1.5mm;
+    margin-bottom: 2.5mm;
+  }
+  .header h1 {
+    font-size: 15pt;
+    color: #4a5f7a;
+    letter-spacing: .3px;
+    font-weight: 700;
+  }
+  .header .sub {
+    font-size: 9.5pt;
+    color: #8a9bb0;
+    font-weight: 600;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2mm;
+    flex: 1;
+  }
+  .col { display: flex; flex-direction: column; gap: 2mm; }
+
+  .box {
+    background: #f7f9fc;
+    border-left: 3px solid #7e93af;
+    border-radius: 4px;
+    padding: 2mm 2.5mm;
+    break-inside: avoid;
+  }
+  .box h2 {
+    font-size: 10pt;
+    color: #4a5f7a;
+    margin-bottom: 1.2mm;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    border-bottom: 1px dotted #c8d2e0;
+    padding-bottom: .8mm;
+    font-weight: 700;
+  }
+
+  /* STONOWANE KOLORY SEKCJI */
+  .box.green  { border-color: #86bfa1; background: #f4faf6; }
+  .box.green h2  { color: #4d8c6a; }
+  .box.amber  { border-color: #d4b678; background: #fcf8f0; }
+  .box.amber h2  { color: #96762f; }
+  .box.rose   { border-color: #d49595; background: #fcf5f5; }
+  .box.rose h2   { color: #9a5555; }
+  .box.purple { border-color: #a99bc9; background: #f8f6fc; }
+  .box.purple h2 { color: #6f5e96; }
+  .box.teal   { border-color: #86bcb6; background: #f3f9f8; }
+  .box.teal h2   { color: #4d8079; }
+  .box.slate  { border-color: #9aa7b8; background: #f6f8fa; }
+  .box.slate h2  { color: #5b6878; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+  }
+  td, th {
+    padding: .8mm 1.2mm;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: #e8eef5;
+    font-weight: 700;
+    font-size: 9pt;
+    color: #4a5f7a;
+  }
+  tr:nth-child(even) td { background: rgba(0,0,0,.015); }
+
+  b, strong { color: #4a5f7a; font-weight: 700; }
+  .en { color: #2c3e50; font-weight: 600; }
+  .pl { color: #8a9bb0; font-style: italic; }
+  .hl { background: #fdf3d8; padding: 0 .5mm; border-radius: 2px; font-weight: 600; }
+
+  ul { list-style: none; }
+  ul li { padding: .35mm 0; padding-left: 3mm; position: relative; font-size: 9.5pt; line-height: 1.25; }
+  ul li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: #93a4bb;
+    font-weight: 700;
+  }
+
+  .mini { font-size: 9.5pt; line-height: 1.28; margin-bottom: .5mm; }
+  .mini b { color: #4a5f7a; }
+
+  .footer {
+    margin-top: 1.5mm;
+    border-top: 1px solid #c8d2e0;
+    padding-top: 1mm;
+    font-size: 8.5pt;
+    color: #8a9bb0;
+    text-align: center;
+  }
+
+  /* TABELA CZASÓW – 4 kolumny */
+  .tenses-4col { font-size: 9pt; table-layout: fixed; }
+  .tenses-4col th, .tenses-4col td { padding: .7mm 1mm; line-height: 1.2; }
+  .tenses-4col .col-czas { width: 25%; font-weight: 700; color: #4a5f7a; font-size: 9pt; }
+  .tenses-4col .col-kiedy { width: 20%; font-size: 8.8pt; color: #5b6878; }
+  .tenses-4col .col-forma { width: 22%; font-family: 'Consolas', monospace; font-size: 8.5pt; }
+  .tenses-4col .col-przyklad { width: 33%; font-size: 9pt; }
+</style>
+</head>
+<body>
+
+<!-- ===================== STRONA 1 ===================== -->
+<div class="page">
+
+  <div class="header">
+    <h1>🇬🇧 ANGIELSKI – ŚCIĄGAWKA</h1>
+    <div class="sub">Strona 1/2 · Gramatyka i czasy</div>
+  </div>
+
+  <div class="grid">
+
+    <!-- KOLUMNA 1 -->
+    <div class="col">
+
+      <div class="box">
+        <h2>12 czasów – przegląd</h2>
+        <table class="tenses-4col">
+          <tr>
+            <th class="col-czas">Czas</th>
+            <th class="col-kiedy">Kiedy</th>
+            <th class="col-forma">Forma</th>
+            <th class="col-przyklad">Przykład</th>
+          </tr>
+          <tr><td class="col-czas">Present Simple</td><td class="col-kiedy">Rutyna</td><td class="col-forma">V / V+s</td><td class="col-przyklad en">I work / she works</td></tr>
+          <tr><td class="col-czas">Present Continuous</td><td class="col-kiedy">Teraz</td><td class="col-forma">am/is/are + -ing</td><td class="col-przyklad en">I am working</td></tr>
+          <tr><td class="col-czas">Present Perfect</td><td class="col-kiedy">Doświadczenie</td><td class="col-forma">have/has + III</td><td class="col-przyklad en">I have worked</td></tr>
+          <tr><td class="col-czas">Present Perfect Continuous</td><td class="col-kiedy">Trwa od…</td><td class="col-forma">have been + -ing</td><td class="col-przyklad en">I have been working</td></tr>
+          <tr><td class="col-czas">Past Simple</td><td class="col-kiedy">Przeszłość</td><td class="col-forma">V-ed / II</td><td class="col-przyklad en">I worked / I went</td></tr>
+          <tr><td class="col-czas">Past Continuous</td><td class="col-kiedy">Trwało wtedy</td><td class="col-forma">was/were + -ing</td><td class="col-przyklad en">I was working</td></tr>
+          <tr><td class="col-czas">Past Perfect</td><td class="col-kiedy">Wcześniej</td><td class="col-forma">had + III</td><td class="col-przyklad en">I had worked</td></tr>
+          <tr><td class="col-czas">Past Perfect Continuous</td><td class="col-kiedy">Trwało przed</td><td class="col-forma">had been + -ing</td><td class="col-przyklad en">I had been working</td></tr>
+          <tr><td class="col-czas">Future Simple</td><td class="col-kiedy">Przyszłość</td><td class="col-forma">will + V</td><td class="col-przyklad en">I will work</td></tr>
+          <tr><td class="col-czas">Be going to</td><td class="col-kiedy">Zamiar</td><td class="col-forma">be going to + V</td><td class="col-przyklad en">I am going to work</td></tr>
+          <tr><td class="col-czas">Future Continuous</td><td class="col-kiedy">Będzie trwać</td><td class="col-forma">will be + -ing</td><td class="col-przyklad en">I will be working</td></tr>
+          <tr><td class="col-czas">Future Perfect</td><td class="col-kiedy">Będzie zrobione</td><td class="col-forma">will have + III</td><td class="col-przyklad en">I will have worked</td></tr>
+        </table>
+      </div>
+
+      <div class="box amber">
+        <h2>Sygnały czasów</h2>
+        <ul class="mini">
+          <li><b>Present Simple:</b> always, usually, often, never, every day</li>
+          <li><b>Present Cont.:</b> now, at the moment, today, look!</li>
+          <li><b>Past Simple:</b> yesterday, last week, in 2020, ago</li>
+          <li><b>Past Cont.:</b> at 8 p.m., while, when</li>
+          <li><b>Present Perfect:</b> already, just, yet, ever, never, since, for</li>
+          <li><b>Future:</b> tomorrow, next week, soon, in two days</li>
+        </ul>
+      </div>
+
+      <div class="box rose">
+        <h2>Present Perfect vs Past Simple</h2>
+        <p class="mini"><b>Present Perfect</b> – gdy ważny <span class="hl">skutek</span> teraz, brak daty.</p>
+        <p class="mini en">I have lost my keys. <span class="pl">(nie mam ich)</span></p>
+        <p class="mini"><b>Past Simple</b> – gdy podana <span class="hl">data</span>.</p>
+        <p class="mini en">I lost my keys yesterday.</p>
+      </div>
+
+    </div>
+
+    <!-- KOLUMNA 2 -->
+    <div class="col">
+
+      <div class="box green">
+        <h2>Okresy warunkowe</h2>
+        <table>
+          <tr><th>Typ</th><th>Budowa</th></tr>
+          <tr><td><b>0</b> Fakt</td><td class="en">If + Pres, Pres <br><span class="pl">If you heat water, it boils.</span></td></tr>
+          <tr><td><b>1</b> Realne</td><td class="en">If + Pres, will + V <br><span class="pl">If it rains, I will stay.</span></td></tr>
+          <tr><td><b>2</b> Hipoteza</td><td class="en">If + Past, would + V <br><span class="pl">If I had money, I would travel.</span></td></tr>
+          <tr><td><b>3</b> Żal</td><td class="en">If + had III, would have III <br><span class="pl">If I had studied, I would have passed.</span></td></tr>
+          <tr><td><b>Mixed</b></td><td class="en">If + had III, would + V <br><span class="pl">If I had studied, I would be a doctor now.</span></td></tr>
+        </table>
+      </div>
+
+      <div class="box purple">
+        <h2>Czasowniki modalne</h2>
+        <table>
+          <tr><th>Modal</th><th>Znaczenie</th></tr>
+          <tr><td><b>can / can't</b></td><td class="pl">umiem / nie umiem</td></tr>
+          <tr><td><b>could</b></td><td class="pl">mogłem, uprzejma prośba</td></tr>
+          <tr><td><b>must</b></td><td class="pl">muszę (osobiście)</td></tr>
+          <tr><td><b>have to</b></td><td class="pl">muszę (obowiązek)</td></tr>
+          <tr><td><b>mustn't</b></td><td class="pl">nie wolno</td></tr>
+          <tr><td><b>don't have to</b></td><td class="pl">nie muszę</td></tr>
+          <tr><td><b>should</b></td><td class="pl">powinienem</td></tr>
+          <tr><td><b>may / might</b></td><td class="pl">być może</td></tr>
+          <tr><td><b>will</b></td><td class="pl">przyszłość / decyzja</td></tr>
+        </table>
+      </div>
+
+      <div class="box teal">
+        <h2>Strona bierna</h2>
+        <p class="mini"><b>Budowa:</b> <span class="en">be + III forma</span></p>
+        <p class="mini en">The room <b>is cleaned</b> every day.</p>
+        <p class="mini en">The car <b>was repaired</b> yesterday.</p>
+        <p class="mini en">The work <b>will be finished</b> tomorrow.</p>
+        <p class="mini en">The report <b>has been sent</b>.</p>
+        <p class="mini en">The problem <b>must be solved</b>.</p>
+        <p class="mini"><b>Have sth done:</b> <span class="en">I had my car repaired.</span></p>
+      </div>
+
+    </div>
+
+    <!-- KOLUMNA 3 -->
+    <div class="col">
+
+      <div class="box">
+        <h2>Stopniowanie</h2>
+        <p class="mini"><b>Krótkie:</b> <span class="en">tall → taller → the tallest</span></p>
+        <p class="mini"><b>Długie:</b> <span class="en">beautiful → more beautiful → the most</span></p>
+        <p class="mini"><b>Nieregularne:</b></p>
+        <p class="mini en">good → better → the best</p>
+        <p class="mini en">bad → worse → the worst</p>
+        <p class="mini en">far → further → the furthest</p>
+      </div>
+
+      <div class="box amber">
+        <h2>Mowa zależna</h2>
+        <p class="mini">Cofamy czas o jeden:</p>
+        <p class="mini en">"I <b>am</b> tired" → he <b>was</b> tired</p>
+        <p class="mini en">"I <b>work</b>" → he <b>worked</b></p>
+        <p class="mini en">"I <b>will</b> come" → he <b>would</b> come</p>
+        <p class="mini en">"I <b>can</b> help" → he <b>could</b> help</p>
+      </div>
+
+      <div class="box rose">
+        <h2>Pytania – kolejność</h2>
+        <p class="mini"><b>Present:</b> <span class="en">Do you work?</span></p>
+        <p class="mini"><b>Past:</b> <span class="en">Did you work?</span></p>
+        <p class="mini"><b>Perfect:</b> <span class="en">Have you worked?</span></p>
+        <p class="mini"><b>Modal:</b> <span class="en">Can you help?</span></p>
+        <p class="mini"><b>Wh-:</b> <span class="en">Where do you live?</span></p>
+      </div>
+
+      <div class="box green">
+        <h2>Przyimki in / on / at</h2>
+        <p class="mini"><b>IN</b> – <span class="en">in May, in 2025, in Poland</span></p>
+        <p class="mini"><b>ON</b> – <span class="en">on Monday, on 5th May</span></p>
+        <p class="mini"><b>AT</b> – <span class="en">at 5 o'clock, at home</span></p>
+      </div>
+
+      <div class="box teal">
+        <h2>Some / Any / Much / Many</h2>
+        <p class="mini"><b>some</b> – twierdzenia <span class="pl">(some water)</span></p>
+        <p class="mini"><b>any</b> – pytania/przeczenia <span class="pl">(any questions?)</span></p>
+        <p class="mini"><b>much</b> – niepoliczalne <span class="pl">(much money)</span></p>
+        <p class="mini"><b>many</b> – policzalne <span class="pl">(many books)</span></p>
+        <p class="mini"><b>a lot of</b> – oba <span class="pl">(a lot of work)</span></p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="footer">Ściągawka do angielskiego · Strona 1/2 · Gramatyka i czasy</div>
+</div>
+
+<!-- ===================== STRONA 2 ===================== -->
+<div class="page">
+
+  <div class="header">
+    <h1>🇬🇧 ANGIELSKI – ŚCIĄGAWKA</h1>
+    <div class="sub">Strona 2/2 · Struktury zaawansowane (B2–C1)</div>
+  </div>
+
+  <div class="grid">
+
+    <!-- KOLUMNA 1 -->
+    <div class="col">
+
+      <div class="box purple">
+        <h2>Inwersja stylistyczna</h2>
+        <p class="mini en">Never <b>have I seen</b> such a thing.</p>
+        <p class="mini en">Rarely <b>does she</b> complain.</p>
+        <p class="mini en">No sooner <b>had he arrived</b> than it rained.</p>
+        <p class="mini en">Hardly <b>had we left</b> when it rang.</p>
+        <p class="mini en">Not only <b>did she sing</b>, but she danced.</p>
+        <p class="mini en">Little <b>did he know</b> about it.</p>
+      </div>
+
+      <div class="box rose">
+        <h2>Inwersja warunkowa</h2>
+        <p class="mini en"><b>Had</b> I known, I would have helped.</p>
+        <p class="mini en"><b>Were</b> I you, I would leave.</p>
+        <p class="mini en"><b>Should</b> you need help, contact me.</p>
+      </div>
+
+      <div class="box amber">
+        <h2>Konstrukcje emfatyczne</h2>
+        <p class="mini en">It was John <b>who</b> broke the window.</p>
+        <p class="mini en">It is money <b>that</b> he wants.</p>
+        <p class="mini en"><b>What</b> I need is a holiday.</p>
+        <p class="mini en">All <b>I want</b> is peace and quiet.</p>
+      </div>
+
+      <div class="box slate">
+        <h2>Subjunctive / Formal</h2>
+        <p class="mini en">I suggest that he <b>be</b> informed.</p>
+        <p class="mini en">It is essential that she <b>arrive</b> on time.</p>
+        <p class="mini en">It's time we <b>left</b>.</p>
+        <p class="mini en">I'd rather you <b>didn't</b> smoke.</p>
+      </div>
+
+    </div>
+
+    <!-- KOLUMNA 2 -->
+    <div class="col">
+
+      <div class="box green">
+        <h2>Modal Perfect</h2>
+        <table>
+          <tr><th>Konstrukcja</th><th>Znaczenie</th></tr>
+          <tr><td class="en"><b>must have</b> + III</td><td class="pl">pewnie tak było</td></tr>
+          <tr><td class="en"><b>can't have</b> + III</td><td class="pl">pewnie nie było</td></tr>
+          <tr><td class="en"><b>may / might have</b></td><td class="pl">możliwe, że…</td></tr>
+          <tr><td class="en"><b>could have</b> + III</td><td class="pl">szansa (niewyk.)</td></tr>
+          <tr><td class="en"><b>should have</b> + III</td><td class="pl">powinien był</td></tr>
+          <tr><td class="en"><b>needn't have</b></td><td class="pl">niepotrzebnie</td></tr>
+        </table>
+      </div>
+
+      <div class="box teal">
+        <h2>Reporting verbs (B2+)</h2>
+        <p class="mini en">He <b>admitted stealing</b> it.</p>
+        <p class="mini en">She <b>denied having seen</b> him.</p>
+        <p class="mini en">They <b>accused me of lying</b>.</p>
+        <p class="mini en">He <b>insisted on paying</b>.</p>
+        <p class="mini en">She <b>suggested going</b> out.</p>
+        <p class="mini en">He <b>refused to answer</b>.</p>
+        <p class="mini en">She <b>apologised for being</b> late.</p>
+      </div>
+
+      <div class="box purple">
+        <h2>Passive – zaawansowane</h2>
+        <p class="mini en">He <b>is said to be</b> rich.</p>
+        <p class="mini en">She <b>is believed to have left</b>.</p>
+        <p class="mini en">The house <b>is being built</b>.</p>
+        <p class="mini en">I <b>had my hair cut</b>.</p>
+        <p class="mini en">The work <b>needs to be done</b>.</p>
+        <p class="mini en">I hate <b>being told</b> what to do.</p>
+      </div>
+
+      <div class="box amber">
+        <h2>Participle clauses</h2>
+        <p class="mini en"><b>Having finished</b> work, she went home.</p>
+        <p class="mini en"><b>Feeling tired</b>, he went to bed.</p>
+        <p class="mini en"><b>Not knowing</b> the answer, I stayed silent.</p>
+        <p class="mini en"><b>Built</b> in 1900, the house is historic.</p>
+      </div>
+
+    </div>
+
+    <!-- KOLUMNA 3 -->
+    <div class="col">
+
+      <div class="box slate">
+        <h2>Łączniki — dyskurs</h2>
+        <table class="mini">
+          <tr><td class="en"><b>However</b></td><td class="pl">jednakże</td></tr>
+          <tr><td class="en"><b>Nevertheless</b></td><td class="pl">niemniej</td></tr>
+          <tr><td class="en"><b>Therefore</b></td><td class="pl">dlatego</td></tr>
+          <tr><td class="en"><b>Moreover</b></td><td class="pl">co więcej</td></tr>
+          <tr><td class="en"><b>Furthermore</b></td><td class="pl">ponadto</td></tr>
+          <tr><td class="en"><b>Despite / In spite</b></td><td class="pl">mimo że</td></tr>
+          <tr><td class="en"><b>Although / Even</b></td><td class="pl">chociaż</td></tr>
+          <tr><td class="en"><b>Whereas / While</b></td><td class="pl">podczas gdy</td></tr>
+          <tr><td class="en"><b>As a result</b></td><td class="pl">w rezultacie</td></tr>
+          <tr><td class="en"><b>On the other hand</b></td><td class="pl">z 2. strony</td></tr>
+        </table>
+      </div>
+
+      <div class="box green">
+        <h2>Kolokacje — czas. + przyimek</h2>
+        <table class="mini">
+          <tr><td class="en">depend <b>on</b></td><td class="pl">zależeć od</td></tr>
+          <tr><td class="en">consist <b>of</b></td><td class="pl">składać się</td></tr>
+          <tr><td class="en">apologise <b>for</b></td><td class="pl">przepraszać</td></tr>
+          <tr><td class="en">succeed <b>in</b></td><td class="pl">odnieść sukces</td></tr>
+          <tr><td class="en">insist <b>on</b></td><td class="pl">nalegać</td></tr>
+          <tr><td class="en">complain <b>about</b></td><td class="pl">skarżyć się</td></tr>
+          <tr><td class="en">rely <b>on</b></td><td class="pl">polegać</td></tr>
+          <tr><td class="en">belong <b>to</b></td><td class="pl">należeć do</td></tr>
+          <tr><td class="en">result <b>in</b></td><td class="pl">skutkować</td></tr>
+        </table>
+      </div>
+
+      <div class="box rose">
+        <h2>Phrasal verbs (C1)</h2>
+        <table class="mini">
+          <tr><td class="en">put off</td><td class="pl">odkładać</td></tr>
+          <tr><td class="en">bring up</td><td class="pl">wychować</td></tr>
+          <tr><td class="en">carry out</td><td class="pl">przeprowadzać</td></tr>
+          <tr><td class="en">come up with</td><td class="pl">wymyślić</td></tr>
+          <tr><td class="en">look forward to</td><td class="pl">czekać z niecierpl.</td></tr>
+          <tr><td class="en">look up to</td><td class="pl">podziwiać</td></tr>
+          <tr><td class="en">get away with</td><td class="pl">ujść na sucho</td></tr>
+          <tr><td class="en">put up with</td><td class="pl">znosić</td></tr>
+          <tr><td class="en">make up for</td><td class="pl">wynagrodzić</td></tr>
+          <tr><td class="en">take up</td><td class="pl">zacząć (hobby)</td></tr>
+        </table>
+      </div>
+
+      <div class="box purple">
+        <h2>Idiomy</h2>
+        <table class="mini">
+          <tr><td class="en">a piece of cake</td><td class="pl">bułka z masłem</td></tr>
+          <tr><td class="en">break the ice</td><td class="pl">przełamać lody</td></tr>
+          <tr><td class="en">hit the books</td><td class="pl">wziąć się do nauki</td></tr>
+          <tr><td class="en">under the weather</td><td class="pl">w słabszej formie</td></tr>
+          <tr><td class="en">once in a blue moon</td><td class="pl">raz na ruski rok</td></tr>
+          <tr><td class="en">bite the bullet</td><td class="pl">zacisnąć zęby</td></tr>
+          <tr><td class="en">cut corners</td><td class="pl">iść na skróty</td></tr>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="footer">Ściągawka do angielskiego · Strona 2/2 · Struktury zaawansowane (B2–C1)</div>
+</div>
+
+</body>
+</html>
