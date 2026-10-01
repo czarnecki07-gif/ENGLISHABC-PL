@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angielski – Ściągawka</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5f7fa;
+    color: #2c3e50;
+    font-size: 10.5pt;
+    line-height: 1.4;
+  }
+
+  /* ===== NAGŁÓWEK ===== */
+  .top-bar {
+    background: linear-gradient(135deg, #4a5f7a, #7e93af);
+    color: #fff;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    position: sticky; top: 0; z-index: 50;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .top-bar h1 { font-size: 1.2rem; font-weight: 700; letter-spacing: .3px; }
+  .print-btn {
+    padding: 8px 16px;
+    background: #facc15; color: #1e293b;
+    border: none; border-radius: 20px;
+    font-weight: 700; font-size: .85rem;
+    cursor: pointer;
+  }
+  .print-btn:hover { background: #eab308; }
+
+  /* ===== ZAKŁADKI ===== */
+  .tabs-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 10px 20px;
+    background: #fff;
+    border-bottom: 2px solid #e2e8f0;
+    position: sticky; top: 56px; z-index: 40;
+    box-shadow: 0 2px 6px rgba(0,0,0,.05);
+  }
+  .tab-btn {
+    padding: 7px 14px;
+    border: 1.5px solid #c8d2e0;
+    border-radius: 18px;
+    background: #f8fafc;
+    color: #4a5f7a;
+    font-weight: 600;
+    font-size: .82rem;
+    cursor: pointer;
+    transition: .15s;
+  }
+  .tab-btn:hover { background: #e8eef5; }
+  .tab-btn.active {
+    background: #4a5f7a; color: #fff;
+    border-color: #4a5f7a;
+  }
+
+  /* ===== TREŚĆ ===== */
+  .tab-content {
+    display: none;
+    padding: 16px 20px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .tab-content.active { display: block; }
+
+  .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+  .box {
+    background: #fff;
+    border-left: 3.5px solid #7e93af;
+    border-radius: 6px;
+    padding: 12px 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05);
+    margin-bottom: 12px;
+    break-inside: avoid;
+  }
+  .box h2 {
+    font-size: 1rem;
+    color: #4a5f7a;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1.5px dotted #c8d2e0;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    font-weight: 700;
+  }
+
+  .box.green  { border-color: #86bfa1; }
+  .box.green h2  { color: #4d8c6a; }
+  .box.amber  { border-color: #d4b678; }
+  .box.amber h2  { color: #96762f; }
+  .box.rose   { border-color: #d49595; }
+  .box.rose h2   { color: #9a5555; }
+  .box.purple { border-color: #a99bc9; }
+  .box.purple h2 { color: #6f5e96; }
+  .box.teal   { border-color: #86bcb6; }
+  .box.teal h2   { color: #4d8079; }
+  .box.slate  { border-color: #9aa7b8; }
+  .box.slate h2  { color: #5b6878; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5pt;
+  }
+  td, th {
+    padding: 4px 6px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid #eef2f7;
+  }
+  th {
+    background: #e8eef5;
+    font-weight: 700;
+    color: #4a5f7a;
+    font-size: 9.5pt;
+  }
+  tr:nth-child(even) td { background: rgba(0,0,0,.015); }
+
+  b, strong { color: #4a5f7a; }
+  .en { color: #2c3e50; font-weight: 600; }
+  .pl { color: #8a9bb0; font-style: italic; }
+  .hl { background: #fdf3d8; padding: 0 3px; border-radius: 2px; font-weight: 600; }
+
+  ul { list-style: none; }
+  ul li {
+    padding: 3px 0 3px 14px;
+    position: relative;
+    font-size: 9.8pt;
+  }
+  ul li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: #93a4bb;
+    font-weight: 700;
+  }
+
+  p { margin-bottom: 6px; font-size: 10pt; }
+  p.mini { font-size: 9.8pt; line-height: 1.35; margin-bottom: 5px; }
+
+  /* ===== PASEK AUDIO ===== */
+  .audio-bar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background: #f1f5f9;
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .audio-bar button {
+    padding: 7px 14px;
+    border: none; border-radius: 8px;
+    background: #2563eb; color: #fff;
+    font-weight: 600; font-size: .82rem;
+    cursor: pointer;
+    transition: .15s;
+  }
+  .audio-bar button:hover { background: #1e40af; }
+  .audio-bar .rate-mini {
+    display: flex; align-items: center; gap: 6px;
+    margin-left: auto; font-size: .8rem; color: #64748b;
+  }
+  .audio-bar .rate-mini input { width: 70px; }
+
+  /* ===== KLIKALNE SŁOWA ===== */
+  .word {
+    display: inline;
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 0 1px;
+    transition: background .12s;
+  }
+  .word:hover { background: rgba(37,99,235,.18); }
+  .word.speaking { background: rgba(250,204,21,.85); }
+
+  /* ===== POPUP ===== */
+  .word-popup {
+    position: fixed;
+    z-index: 1000;
+    background: #fff;
+    border: 2px solid #2563eb;
+    border-radius: 10px;
+    padding: 10px 12px;
+    width: 220px;
+    max-width: 90vw;
+    box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: .88rem;
+  }
+  .word-popup.hidden { display: none; }
+  .wp-word {
+    font-weight: 700; color: #1e40af;
+    font-size: 1rem; margin-bottom: 8px;
+    word-break: break-word;
+  }
+  .wp-buttons { display: flex; gap: 5px; flex-wrap: wrap; }
+  .wp-buttons button,
+  .wp-buttons a {
+    padding: 6px 10px; border: none; border-radius: 7px;
+    background: #dbeafe; color: #1e40af;
+    font-weight: 700; font-size: .78rem;
+    cursor: pointer; text-decoration: none;
+    display: inline-block; text-align: center;
+    flex: 1; min-width: 55px;
+    transition: .15s;
+  }
+  .wp-buttons button:hover,
+  .wp-buttons a:hover { background: #bfdbfe; }
+  .wp-buttons a.google {
+    background: #fef3c7; color: #92400e;
+  }
+  .wp-buttons a.google:hover { background: #fde68a; }
+  .wp-buttons button.save {
+    background: #10b981; color: #fff;
+  }
+  .wp-buttons button.save:hover { background: #059669; }
+
+  /* ===== DRUK ===== */
+  @media print {
+    @page { size: A4; margin: 8mm; }
+    body { background: #fff; font-size: 9pt; }
+    .top-bar, .tabs-nav, .audio-bar, .word-popup { display: none !important; }
+    .tab-content { display: block !important; page-break-after: always; padding: 0; max-width: 100%; }
+    .tab-content:last-child { page-break-after: auto; }
+    .box { box-shadow: none; border: 1px solid #ddd; }
+    .word { background: transparent !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>🇬🇧 ANGIELSKI – ŚCIĄGAWKA</h1>
+  <button class="print-btn" onclick="window.print()">🖨 Drukuj wszystko</button>
+</div>
+
+<nav class="tabs-nav" id="tabsNav">
+  <button class="tab-btn active" data-tab="gramatyka">Gramatyka</button>
+  <button class="tab-btn" data-tab="czasowniki">Czasowniki</button>
+  <button class="tab-btn" data-tab="articles">Articles</button>
+  <button class="tab-btn" data-tab="pisownia">Pisownia</button>
+  <button class="tab-btn" data-tab="liczebniki">Liczebniki</button>
+  <button class="tab-btn" data-tab="przyimki">Przyimki</button>
+  <button class="tab-btn" data-tab="podstawy">Podstawy</button>
+  <button class="tab-btn" data-tab="konstrukcje">Konstrukcje</button>
+  <button class="tab-btn" data-tab="pytania">Pytania</button>
+  <button class="tab-btn" data-tab="rozmowki">Rozmówki</button>
+  <button class="tab-btn" data-tab="idiomy">Idiomy</button>
+</nav>
+
+<!-- ===================== GRAMATYKA ===================== -->
+<div class="tab-content active" id="tab-gramatyka">
+
+  <div class="grid-3col">
+    <div class="box">
+      <h2>12 czasów – przegląd</h2>
+      <table>
+        <tr><th>Czas</th><th>Budowa</th></tr>
+        <tr><td>Present Simple</td><td class="en">V / V+s</td></tr>
+        <tr><td>Present Continuous</td><td class="en">am/is/are + -ing</td></tr>
+        <tr><td>Present Perfect</td><td class="en">have/has + III</td></tr>
+        <tr><td>Present Perfect Cont.</td><td class="en">have/has been + -ing</td></tr>
+        <tr><td>Past Simple</td><td class="en">V-ed / II</td></tr>
+        <tr><td>Past Continuous</td><td class="en">was/were + -ing</td></tr>
+        <tr><td>Past Perfect</td><td class="en">had + III</td></tr>
+        <tr><td>Past Perfect Cont.</td><td class="en">had been + -ing</td></tr>
+        <tr><td>Future Simple</td><td class="en">will + V</td></tr>
+        <tr><td>Be going to</td><td class="en">be going to + V</td></tr>
+        <tr><td>Future Continuous</td><td class="en">will be + -ing</td></tr>
+        <tr><td>Future Perfect</td><td class="en">will have + III</td></tr>
+      </table>
+    </div>
+
+    <div class="box green">
+      <h2>Okresy warunkowe</h2>
+      <table>
+        <tr><th>Typ</th><th>Budowa</th></tr>
+        <tr><td><b>0</b> Fakt</td><td class="en">If + Pres, Pres</td></tr>
+        <tr><td><b>1</b> Realne</td><td class="en">If + Pres, will + V</td></tr>
+        <tr><td><b>2</b> Hipoteza</td><td class="en">If + Past, would + V</td></tr>
+        <tr><td><b>3</b> Żal</td><td class="en">If + had III, would have III</td></tr>
+        <tr><td><b>Mixed</b></td><td class="en">If + had III, would + V</td></tr>
+      </table>
+      <p class="mini" style="margin-top:6px;"><b>0:</b> If you heat water, it boils.</p>
+      <p class="mini"><b>1:</b> If it rains, I will stay.</p>
+      <p class="mini"><b>2:</b> If I had money, I would travel.</p>
+      <p class="mini"><b>3:</b> If I had studied, I would have passed.</p>
+    </div>
+
+    <div class="box purple">
+      <h2>Czasowniki modalne</h2>
+      <table>
+        <tr><th>Modal</th><th>Znaczenie</th></tr>
+        <tr><td><b>can / can't</b></td><td class="pl">umiem / nie umiem</td></tr>
+        <tr><td><b>could</b></td><td class="pl">mogłem, prośba</td></tr>
+        <tr><td><b>must</b></td><td class="pl">muszę (osobiście)</td></tr>
+        <tr><td><b>have to</b></td><td class="pl">muszę (obowiązek)</td></tr>
+        <tr><td><b>mustn't</b></td><td class="pl">nie wolno</td></tr>
+        <tr><td><b>don't have to</b></td><td class="pl">nie muszę</td></tr>
+        <tr><td><b>should</b></td><td class="pl">powinienem</td></tr>
+        <tr><td><b>may / might</b></td><td class="pl">być może</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid-3col">
+    <div class="box amber">
+      <h2>Sygnały czasów</h2>
+      <ul>
+        <li><b>Pres. Simple:</b> always, usually, often, never, every day</li>
+        <li><b>Pres. Cont.:</b> now, at the moment, today, look!</li>
+        <li><b>Pres. Perfect:</b> already, just, yet, ever, never, since, for</li>
+        <li><b>Past Simple:</b> yesterday, last week, in 2020, ago</li>
+        <li><b>Past Cont.:</b> at 8 p.m., while, when</li>
+        <li><b>Past Perfect:</b> before, after, by the time</li>
+        <li><b>Future:</b> tomorrow, next week, soon</li>
+      </ul>
+    </div>
+
+    <div class="box teal">
+      <h2>Strona bierna</h2>
+      <p class="mini"><b>Budowa:</b> <span class="en">be + III forma</span></p>
+      <p class="mini en">The room <b>is cleaned</b> every day.</p>
+      <p class="mini en">The car <b>was repaired</b> yesterday.</p>
+      <p class="mini en">The work <b>will be finished</b> tomorrow.</p>
+      <p class="mini en">The report <b>has been sent</b>.</p>
+      <p class="mini en">The problem <b>must be solved</b>.</p>
+      <p class="mini"><b>Have sth done:</b> <span class="en">I had my car repaired.</span></p>
+    </div>
+
+    <div class="box rose">
+      <h2>Mowa zależna</h2>
+      <p class="mini">Cofamy czas o jeden:</p>
+      <p class="mini en">"I <b>am</b> tired" → he <b>was</b> tired</p>
+      <p class="mini en">"I <b>work</b>" → he <b>worked</b></p>
+      <p class="mini en">"I <b>will</b> come" → he <b>would</b> come</p>
+      <p class="mini en">"I <b>can</b> help" → he <b>could</b> help</p>
+    </div>
+  </div>
+
+  <div class="grid-3col">
+    <div class="box">
+      <h2>Stopniowanie</h2>
+      <p class="mini"><b>Krótkie:</b> <span class="en">tall → taller → the tallest</span></p>
+      <p class="mini"><b>Długie:</b> <span class="en">beautiful → more → the most</span></p>
+      <p class="mini en">good → better → the best</p>
+      <p class="mini en">bad → worse → the worst</p>
+      <p class="mini en">far → further → the furthest</p>
+    </div>
+
+    <div class="box green">
+      <h2>Pres. Perfect vs Past Simple</h2>
+      <p class="mini"><b>Present Perfect</b> – ważny <span class="hl">skutek</span> teraz, brak daty.</p>
+      <p class="mini en">I have lost my keys. <span class="pl">(nie mam ich)</span></p>
+      <p class="mini"><b>Past Simple</b> – podana <span class="hl">data</span>.</p>
+      <p class="mini en">I lost my keys yesterday.</p>
+    </div>
+
+    <div class="box slate">
+      <h2>Subjunctive / Formal</h2>
+      <p class="mini en">I suggest that he <b>be</b> informed.</p>
+      <p class="mini en">It is essential that she <b>arrive</b> on time.</p>
+      <p class="mini en">It's time we <b>left</b>.</p>
+      <p class="mini en">I'd rather you <b>didn't</b> smoke.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===================== CZASOWNIKI ===================== -->
+<div class="tab-content" id="tab-czasowniki">
+
+  <div class="box rose">
+    <h2>100 czasowników nieregularnych</h2>
+    <p class="mini" style="margin-bottom:8px;">Kolumny: <b>bezokolicznik</b> · <b>Past Simple (II)</b> · <b>Past Participle (III)</b> · <b>tłumaczenie</b></p>
+    <div class="grid-2col">
+      <div>
+        <table>
+          <tr><th>I</th><th>II</th><th>III</th><th>PL</th></tr>
+          <tr><td class="en">be</td><td>was/were</td><td>been</td><td class="pl">być</td></tr>
+          <tr><td class="en">have</td><td>had</td><td>had</td><td class="pl">mieć</td></tr>
+          <tr><td class="en">do</td><td>did</td><td>done</td><td class="pl">robić</td></tr>
+          <tr><td class="en">say</td><td>said</td><td>said</td><td class="pl">mówić</td></tr>
+          <tr><td class="en">go</td><td>went</td><td>gone</td><td class="pl">iść, jechać</td></tr>
+          <tr><td class="en">get</td><td>got</td><td>got</td><td class="pl">dostać, stać się</td></tr>
+          <tr><td class="en">make</td><td>made</td><td>made</td><td class="pl">robić, tworzyć</td></tr>
+          <tr><td class="en">know</td><td>knew</td><td>known</td><td class="pl">wiedzieć, znać</td></tr>
+          <tr><td class="en">think</td><td>thought</td><td>thought</td><td class="pl">myśleć</td></tr>
+          <tr><td class="en">take</td><td>took</td><td>taken</td><td class="pl">brać</td></tr>
+          <tr><td class="en">see</td><td>saw</td><td>seen</td><td class="pl">widzieć</td></tr>
+          <tr><td class="en">come</td><td>came</td><td>come</td><td class="pl">przychodzić</td></tr>
+          <tr><td class="en">give</td><td>gave</td><td>given</td><td class="pl">dawać</td></tr>
+          <tr><td class="en">find</td><td>found</td><td>found</td><td class="pl">znajdować</td></tr>
+          <tr><td class="en">tell</td><td>told</td><td>told</td><td class="pl">mówić, opowiadać</td></tr>
+          <tr><td class="en">become</td><td>became</td><td>become</td><td class="pl">stawać się</td></tr>
+          <tr><td class="en">leave</td><td>left</td><td>left</td><td class="pl">opuszczać</td></tr>
+          <tr><td class="en">feel</td><td>felt</td><td>felt</td><td class="pl">czuć</td></tr>
+          <tr><td class="en">put</td><td>put</td><td>put</td><td class="pl">kłaść</td></tr>
+          <tr><td class="en">bring</td><td>brought</td><td>brought</td><td class="pl">przynosić</td></tr>
+          <tr><td class="en">begin</td><td>began</td><td>begun</td><td class="pl">zaczynać</td></tr>
+          <tr><td class="en">keep</td><td>kept</td><td>kept</td><td class="pl">trzymać</td></tr>
+          <tr><td class="en">hold</td><td>held</td><td>held</td><td class="pl">trzymać w rękach</td></tr>
+          <tr><td class="en">write</td><td>wrote</td><td>written</td><td class="pl">pisać</td></tr>
+          <tr><td class="en">stand</td><td>stood</td><td>stood</td><td class="pl">stać</td></tr>
+          <tr><td class="en">hear</td><td>heard</td><td>heard</td><td class="pl">słyszeć</td></tr>
+          <tr><td class="en">let</td><td>let</td><td>let</td><td class="pl">pozwalać</td></tr>
+          <tr><td class="en">mean</td><td>meant</td><td>meant</td><td class="pl">znaczyć</td></tr>
+          <tr><td class="en">set</td><td>set</td><td>set</td><td class="pl">ustawiać</td></tr>
+          <tr><td class="en">meet</td><td>met</td><td>met</td><td class="pl">spotykać</td></tr>
+          <tr><td class="en">run</td><td>ran</td><td>run</td><td class="pl">biegać</td></tr>
+          <tr><td class="en">pay</td><td>paid</td><td>paid</td><td class="pl">płacić</td></tr>
+          <tr><td class="en">sit</td><td>sat</td><td>sat</td><td class="pl">siedzieć</td></tr>
+          <tr><td class="en">speak</td><td>spoke</td><td>spoken</td><td class="pl">mówić</td></tr>
+          <tr><td class="en">lie</td><td>lay</td><td>lain</td><td class="pl">leżeć</td></tr>
+          <tr><td class="en">lead</td><td>led</td><td>led</td><td class="pl">prowadzić</td></tr>
+          <tr><td class="en">read</td><td>read</td><td>read</td><td class="pl">czytać</td></tr>
+          <tr><td class="en">grow</td><td>grew</td><td>grown</td><td class="pl">rosnąć</td></tr>
+          <tr><td class="en">lose</td><td>lost</td><td>lost</td><td class="pl">gubić, tracić</td></tr>
+          <tr><td class="en">fall</td><td>fell</td><td>fallen</td><td class="pl">upadać</td></tr>
+          <tr><td class="en">send</td><td>sent</td><td>sent</td><td class="pl">wysyłać</td></tr>
+          <tr><td class="en">build</td><td>built</td><td>built</td><td class="pl">budować</td></tr>
+          <tr><td class="en">understand</td><td>understood</td><td>understood</td><td class="pl">rozumieć</td></tr>
+          <tr><td class="en">draw</td><td>drew</td><td>drawn</td><td class="pl">rysować</td></tr>
+          <tr><td class="en">break</td><td>broke</td><td>broken</td><td class="pl">łamać</td></tr>
+          <tr><td class="en">spend</td><td>spent</td><td>spent</td><td class="pl">wydawać, spędzać</td></tr>
+          <tr><td class="en">cut</td><td>cut</td><td>cut</td><td class="pl">ciąć</td></tr>
+          <tr><td class="en">rise</td><td>rose</td><td>risen</td><td class="pl">wznosić się</td></tr>
+          <tr><td class="en">drive</td><td>drove</td><td>driven</td><td class="pl">prowadzić auto</td></tr>
+          <tr><td class="en">buy</td><td>bought</td><td>bought</td><td class="pl">kupować</td></tr>
+        </table>
+      </div>
+      <div>
+        <table>
+          <tr><th>I</th><th>II</th><th>III</th><th>PL</th></tr>
+          <tr><td class="en">wear</td><td>wore</td><td>worn</td><td class="pl">nosić ubranie</td></tr>
+          <tr><td class="en">choose</td><td>chose</td><td>chosen</td><td class="pl">wybierać</td></tr>
+          <tr><td class="en">eat</td><td>ate</td><td>eaten</td><td class="pl">jeść</td></tr>
+          <tr><td class="en">drink</td><td>drank</td><td>drunk</td><td class="pl">pić</td></tr>
+          <tr><td class="en">sing</td><td>sang</td><td>sung</td><td class="pl">śpiewać</td></tr>
+          <tr><td class="en">swim</td><td>swam</td><td>swum</td><td class="pl">pływać</td></tr>
+          <tr><td class="en">sleep</td><td>slept</td><td>slept</td><td class="pl">spać</td></tr>
+          <tr><td class="en">wake</td><td>woke</td><td>woken</td><td class="pl">budzić się</td></tr>
+          <tr><td class="en">forget</td><td>forgot</td><td>forgotten</td><td class="pl">zapominać</td></tr>
+          <tr><td class="en">teach</td><td>taught</td><td>taught</td><td class="pl">uczyć kogoś</td></tr>
+          <tr><td class="en">catch</td><td>caught</td><td>caught</td><td class="pl">łapać</td></tr>
+          <tr><td class="en">fight</td><td>fought</td><td>fought</td><td class="pl">walczyć</td></tr>
+          <tr><td class="en">throw</td><td>threw</td><td>thrown</td><td class="pl">rzucać</td></tr>
+          <tr><td class="en">fly</td><td>flew</td><td>flown</td><td class="pl">latać</td></tr>
+          <tr><td class="en">blow</td><td>blew</td><td>blown</td><td class="pl">dmuchać</td></tr>
+          <tr><td class="en">show</td><td>showed</td><td>shown</td><td class="pl">pokazywać</td></tr>
+          <tr><td class="en">shut</td><td>shut</td><td>shut</td><td class="pl">zamykać</td></tr>
+          <tr><td class="en">hurt</td><td>hurt</td><td>hurt</td><td class="pl">ranić, boleć</td></tr>
+          <tr><td class="en">beat</td><td>beat</td><td>beaten</td><td class="pl">bić</td></tr>
+          <tr><td class="en">bite</td><td>bit</td><td>bitten</td><td class="pl">gryźć</td></tr>
+          <tr><td class="en">hide</td><td>hid</td><td>hidden</td><td class="pl">ukrywać</td></tr>
+          <tr><td class="en">hit</td><td>hit</td><td>hit</td><td class="pl">uderzać</td></tr>
+          <tr><td class="en">lay</td><td>laid</td><td>laid</td><td class="pl">kłaść</td></tr>
+          <tr><td class="en">lend</td><td>lent</td><td>lent</td><td class="pl">pożyczać komuś</td></tr>
+          <tr><td class="en">light</td><td>lit</td><td>lit</td><td class="pl">zapalać</td></tr>
+          <tr><td class="en">shake</td><td>shook</td><td>shaken</td><td class="pl">potrząsać</td></tr>
+          <tr><td class="en">shine</td><td>shone</td><td>shone</td><td class="pl">świecić</td></tr>
+          <tr><td class="en">shoot</td><td>shot</td><td>shot</td><td class="pl">strzelać</td></tr>
+          <tr><td class="en">sink</td><td>sank</td><td>sunk</td><td class="pl">tonąć</td></tr>
+          <tr><td class="en">slide</td><td>slid</td><td>slid</td><td class="pl">ślizgać się</td></tr>
+          <tr><td class="en">smell</td><td>smelt</td><td>smelt</td><td class="pl">wąchać</td></tr>
+          <tr><td class="en">spill</td><td>spilt</td><td>spilt</td><td class="pl">rozlewać</td></tr>
+          <tr><td class="en">split</td><td>split</td><td>split</td><td class="pl">dzielić</td></tr>
+          <tr><td class="en">spread</td><td>spread</td><td>spread</td><td class="pl">rozprzestrzeniać</td></tr>
+          <tr><td class="en">steal</td><td>stole</td><td>stolen</td><td class="pl">kraść</td></tr>
+          <tr><td class="en">stick</td><td>stuck</td><td>stuck</td><td class="pl">przyklejać</td></tr>
+          <tr><td class="en">sting</td><td>stung</td><td>stung</td><td class="pl">żądlić</td></tr>
+          <tr><td class="en">strike</td><td>struck</td><td>struck</td><td class="pl">uderzać</td></tr>
+          <tr><td class="en">swear</td><td>swore</td><td>sworn</td><td class="pl">przysięgać</td></tr>
+          <tr><td class="en">sweep</td><td>swept</td><td>swept</td><td class="pl">zamiatać</td></tr>
+          <tr><td class="en">swing</td><td>swung</td><td>swung</td><td class="pl">kołysać</td></tr>
+          <tr><td class="en">tear</td><td>tore</td><td>torn</td><td class="pl">drzeć</td></tr>
+          <tr><td class="en">win</td><td>won</td><td>won</td><td class="pl">wygrywać</td></tr>
+          <tr><td class="en">wind</td><td>wound</td><td>wound</td><td class="pl">nawijać</td></tr>
+          <tr><td class="en">sell</td><td>sold</td><td>sold</td><td class="pl">sprzedawać</td></tr>
+          <tr><td class="en">seek</td><td>sought</td><td>sought</td><td class="pl">szukać</td></tr>
+          <tr><td class="en">feed</td><td>fed</td><td>fed</td><td class="pl">karmić</td></tr>
+          <tr><td class="en">fit</td><td>fit</td><td>fit</td><td class="pl">pasować</td></tr>
+          <tr><td class="en">hang</td><td>hung</td><td>hung</td><td class="pl">wieszać</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===================== ARTICLES ===================== -->
+<div class="tab-content" id="tab-articles">
+
+  <div class="grid-2col">
+
+    <div class="box green">
+      <h2>A / AN – przedimek nieokreślony</h2>
+      <p class="mini"><b>A</b> – przed słowem zaczynającym się na <b>spółgłoskę</b>:</p>
+      <p class="mini en">a book, a car, a university</p>
+      <p class="mini"><b>AN</b> – przed słowem zaczynającym się na <b>samogłoskę</b>:</p>
+      <p class="mini en">an apple, an hour, an MBA</p>
+      <p class="mini" style="margin-top:6px;"><b>Kiedy używamy a/an:</b></p>
+      <ul>
+        <li>Rzecz pojedyncza, <b>nieokreślona</b>: I saw a dog.</li>
+        <li>Zawody: She's a doctor.</li>
+        <li>Pierwsza wzmianka: I have a cat. The cat is black.</li>
+        <li>W znaczeniu „jeden": Wait a moment.</li>
+      </ul>
+    </div>
+
+    <div class="box purple">
+      <h2>THE – przedimek określony</h2>
+      <p class="mini"><b>Używamy gdy:</b></p>
+      <ul>
+        <li>Już wspomniane: I have a cat. <b>The</b> cat is black.</li>
+        <li>Jedno w swoim rodzaju: <b>the</b> sun, <b>the</b> moon</li>
+        <li>Konkretna rzecz: <b>the</b> book on the table</li>
+        <li>Superlatywy: <b>the</b> best, <b>the</b> biggest</li>
+        <li>Liczebniki porządkowe: <b>the</b> first, <b>the</b> second</li>
+        <li>Nazwy rzek, mórz: <b>the</b> Vistula, <b>the</b> Baltic</li>
+        <li>Państwa w liczbie mnogiej: <b>the</b> Netherlands, <b>the</b> USA</li>
+        <li>Instrumenty: play <b>the</b> piano</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="box amber">
+    <h2>BRAK przedimka (zero article)</h2>
+    <p class="mini"><b>NIE używamy the gdy:</b></p>
+    <div class="grid-2col">
+      <ul>
+        <li>Nazwy osób: <b>Anna</b>, <b>Tom</b></li>
+        <li>Większość państw: <b>Poland</b>, <b>France</b></li>
+        <li>Miasta: <b>Warsaw</b>, <b>London</b></li>
+        <li>Posiłki: I eat <b>breakfast</b> at 8.</li>
+        <li>Języki: I speak <b>English</b>.</li>
+        <li>Sport: I play <b>football</b>.</li>
+        <li>Dni, miesiące: on <b>Monday</b>, in <b>May</b></li>
+      </ul>
+      <ul>
+        <li>Rzeczowniki ogólne w lm.: I like <b>dogs</b>.</li>
+        <li>Niepoliczalne: I like <b>music</b>.</li>
+        <li>Pory roku: in <b>summer</b></li>
+        <li>Nazwy ulic: on <b>Main Street</b></li>
+        <li>Lotniska: at <b>Heathrow</b></li>
+        <li>Szkoła, praca (ogólnie): go to <b>school</b>, <b>work</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box teal">
+    <h2>Wyjątki – trudne przypadki</h2>
+    <table>
+      <tr><th>Sytuacja</th><th>Zasada</th></tr>
+      <tr><td class="en">go to bed / go to <b>the</b> bed</td><td class="pl">iść spać / podejść do łóżka</td></tr>
+      <tr><td class="en">go to school / go to <b>the</b> school</td><td class="pl">uczyć się / iść do budynku</td></tr>
+      <tr><td class="en">at home / at <b>the</b> home</td><td class="pl">w domu / w domu opieki</td></tr>
+      <tr><td class="en">in the morning / at night</td><td class="pl">rano / w nocy</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ===================== PISOWNIA ===================== -->
+<div class="tab-content" id="tab-pisownia">
+
+  <div class="grid-2col">
+
+    <div class="box green">
+      <h2>Końcówka -ING</h2>
+      <table>
+        <tr><th>Zasada</th><th>Przykład</th></tr>
+        <tr><td>Zwykle dodaj -ing</td><td class="en">work → working</td></tr>
+        <tr><td>Kończy się na -e → usuń -e</td><td class="en">write → writing</td></tr>
+        <tr><td>1 sylaba CVC → podwój</td><td class="en">run → running</td></tr>
+        <tr><td>-ie → -y</td><td class="en">lie → lying</td></tr>
+        <tr><td>Akcent na ostatniej → podwój</td><td class="en">begin → beginning</td></tr>
+        <tr><td>-y → zostaw</td><td class="en">play → playing</td></tr>
+      </table>
+    </div>
+
+    <div class="box amber">
+      <h2>Końcówka -ED</h2>
+      <table>
+        <tr><th>Zasada</th><th>Przykład</th></tr>
+        <tr><td>Zwykle dodaj -ed</td><td class="en">work → worked</td></tr>
+        <tr><td>-e → dodaj -d</td><td class="en">like → liked</td></tr>
+        <tr><td>Spółgłoska + y → -ied</td><td class="en">study → studied</td></tr>
+        <tr><td>Samogłoska + y → -ed</td><td class="en">play → played</td></tr>
+        <tr><td>1 sylaba CVC → podwój</td><td class="en">stop → stopped</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="grid-2col">
+
+    <div class="box purple">
+      <h2>Liczba mnoga (plural)</h2>
+      <table>
+        <tr><th>Zasada</th><th>Przykład</th></tr>
+        <tr><td>Zwykle -s</td><td class="en">book → books</td></tr>
+        <tr><td>-s,-ss,-sh,-ch,-x → -es</td><td class="en">box → boxes</td></tr>
+        <tr><td>Spółgłoska + y → -ies</td><td class="en">city → cities</td></tr>
+        <tr><td>Samogłoska + y → -s</td><td class="en">boy → boys</td></tr>
+        <tr><td>-f / -fe → -ves</td><td class="en">knife → knives</td></tr>
+        <tr><td>-o → -es (część)</td><td class="en">potato → potatoes</td></tr>
+      </table>
+      <p class="mini" style="margin-top:6px;"><b>Nieregularne:</b></p>
+      <p class="mini en">man → men, woman → women, child → children, foot → feet, tooth → teeth, mouse → mice, person → people</p>
+    </div>
+
+    <div class="box rose">
+      <h2>3 os. l.poj. (-S)</h2>
+      <p class="mini">Present Simple, he/she/it:</p>
+      <table>
+        <tr><th>Zasada</th><th>Przykład</th></tr>
+        <tr><td>Zwykle -s</td><td class="en">work → works</td></tr>
+        <tr><td>-s,-sh,-ch,-x,-o → -es</td><td class="en">go → goes</td></tr>
+        <tr><td>Spółgłoska + y → -ies</td><td class="en">study → studies</td></tr>
+        <tr><td>Samogłoska + y → -s</td><td class="en">play → plays</td></tr>
+        <tr><td>have → has</td><td class="en">She has a car.</td></tr>
+        <tr><td>be → is</td><td class="en">He is happy.</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="box teal">
+    <h2>Końcówki -ER / -EST (stopniowanie)</h2>
+    <table>
+      <tr><th>Zasada</th><th>Przykład</th></tr>
+      <tr><td>1 sylaba → -er / -est</td><td class="en">tall → taller → the tallest</td></tr>
+      <tr><td>Kończy się na -e → -r / -st</td><td class="en">nice → nicer → the nicest</td></tr>
+      <tr><td>Spółgłoska + y → -ier / -iest</td><td class="en">happy → happier → the happiest</td></tr>
+      <tr><td>1 sylaba CVC → podwój</td><td class="en">big → bigger → the biggest</td></tr>
+      <tr><td>2+ sylaby → more / the most</td><td class="en">beautiful → more beautiful → the most beautiful</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<!-- ===================== LICZEBNIKI ===================== -->
+<div class="tab-content" id="tab-liczebniki">
+
+  <div class="grid-2col">
+
+    <div class="box green">
+      <h2>Liczebniki główne 1–100</h2>
+      <table>
+        <tr><th>Liczba</th><th>EN</th><th>Liczba</th><th>EN</th></tr>
+        <tr><td>1</td><td>one</td><td>11</td><td>eleven</td></tr>
+        <tr><td>2</td><td>two</td><td>12</td><td>twelve</td></tr>
+        <tr><td>3</td><td>three</td><td>13</td><td>thirteen</td></tr>
+        <tr><td>4</td><td>four</td><td>14</td><td>fourteen</td></tr>
+        <tr><td>5</td><td>five</td><td>15</td><td>fifteen</td></tr>
+        <tr><td>6</td><td>six</td><td>16</td><td>sixteen</td></tr>
+        <tr><td>7</td><td>seven</td><td>17</td><td>seventeen</td></tr>
+        <tr><td>8</td><td>eight</td><td>18</td><td>eighteen</td></tr>
+        <tr><td>9</td><td>nine</td><td>19</td><td>nineteen</td></tr>
+        <tr><td>10</td><td>ten</td><td>20</td><td>twenty</td></tr>
+      </table>
+      <p class="mini" style="margin-top:6px;"><b>Dziesiątki:</b></p>
+      <p class="mini en">30 thirty · 40 forty · 50 fifty · 60 sixty · 70 seventy · 80 eighty · 90 ninety · 100 one hundred</p>
+      <p class="mini" style="margin-top:4px;"><b>21–99:</b> <span class="en">twenty-one, thirty-five, ninety-nine</span></p>
+    </div>
+
+    <div class="box purple">
+      <h2>Liczebniki porządkowe</h2>
+      <table>
+        <tr><th>Liczba</th><th>EN</th></tr>
+        <tr><td>1st</td><td>first</td></tr>
+        <tr><td>2nd</td><td>second</td></tr>
+        <tr><td>3rd</td><td>third</td></tr>
+        <tr><td>4th</td><td>fourth</td></tr>
+        <tr><td>5th</td><td>fifth</td></tr>
+        <tr><td>6th–9th</td><td>sixth, seventh, eighth, ninth</td></tr>
+        <tr><td>10th</td><td>tenth</td></tr>
+        <tr><td>11th</td><td>eleventh</td></tr>
+        <tr><td>12th</td><td>twelfth</td></tr>
+        <tr><td>13th–19th</td><td>-th (thirteenth…)</td></tr>
+        <tr><td>20th</td><td>twentieth</td></tr>
+        <tr><td>21st</td><td>twenty-first</td></tr>
+        <tr><td>30th</td><td>thirtieth</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="grid-2col">
+
+    <div class="box amber">
+      <h2>Godziny</h2>
+      <p class="mini"><b>Pełne godziny:</b></p>
+      <p class="mini en">3:00 – three o'clock</p>
+      <p class="mini"><b>Połówki:</b></p>
+      <p class="mini en">3:30 – half past three</p>
+      <p class="mini"><b>Kwadranse:</b></p>
+      <p class="mini en">3:15 – quarter past three</p>
+      <p class="mini en">3:45 – quarter to four</p>
+      <p class="mini"><b>Inne:</b></p>
+      <p class="mini en">3:10 – ten past three</p>
+      <p class="mini en">3:50 – ten to four</p>
+      <p class="mini"><b>AM / PM:</b> <span class="en">9 AM, 5 PM</span></p>
+      <p class="mini" style="margin-top:6px;"><b>Pytanie:</b> <span class="en">What time is it?</span></p>
+    </div>
+
+    <div class="box teal">
+      <h2>Daty</h2>
+      <p class="mini"><b>Zapis brytyjski:</b> <span class="en">5 May 2025</span></p>
+      <p class="mini"><b>Zapis amerykański:</b> <span class="en">May 5, 2025</span></p>
+      <p class="mini" style="margin-top:6px;"><b>Pytanie:</b></p>
+      <p class="mini en">What's the date today?</p>
+      <p class="mini"><b>Rok:</b></p>
+      <p class="mini en">2025 → twenty twenty-five</p>
+      <p class="mini en">1998 → nineteen ninety-eight</p>
+      <p class="mini en">1900 → nineteen hundred</p>
+      <p class="mini en">2000 → two thousand</p>
+    </div>
+
+  </div>
+
+  <div class="box green">
+    <h2>Matematyka</h2>
+    <div class="grid-2col">
+      <p class="mini"><b>+</b> plus &nbsp;·&nbsp; <b>−</b> minus</p>
+      <p class="mini"><b>×</b> times &nbsp;·&nbsp; <b>÷</b> divided by</p>
+      <p class="mini"><b>=</b> equals / is</p>
+      <p class="mini en">2 + 3 = 5 → two plus three is five</p>
+      <p class="mini"><b>Ułamek:</b> ½ a half, ⅓ a third, ¼ a quarter</p>
+      <p class="mini"><b>Procent:</b> 50% – fifty percent</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===================== PRZYIMKI ===================== -->
+<div class="tab-content" id="tab-przyimki">
+
+  <div class="grid-2col">
+
+    <div class="box green">
+      <h2>IN / ON / AT – CZAS</h2>
+      <table>
+        <tr><th>IN</th><th>ON</th><th>AT</th></tr>
+        <tr>
+          <td>miesiące: in May<br>lata: in 2025<br>pory roku: in summer<br>pory dnia: in the morning<br>okresy: in 2 hours</td>
+          <td>dni: on Monday<br>daty: on 5th May<br>dni + część dnia: on Monday morning</td>
+          <td>godziny: at 5 o'clock<br>noce: at night<br>weekend (GB): at the weekend<br>święta: at Christmas</td>
+        </tr>
+      </table>
+      <p class="mini" style="margin-top:6px;"><b>Brak przyimka:</b> next week, last year, this month, tomorrow, yesterday, today</p>
+    </div>
+
+    <div class="box purple">
+      <h2>IN / ON / AT – MIEJSCE</h2>
+      <table>
+        <tr><th>IN</th><th>ON</th><th>AT</th></tr>
+        <tr>
+          <td>zamknięte przestrzenie: in a box<br>kraje, miasta: in Poland<br>woda: in the sea</td>
+          <td>powierzchnie: on the table<br>transport: on a bus<br>piętra: on the first floor</td>
+          <td>konkretne miejsca: at the door<br>budynki (ogólnie): at school, at home</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="grid-2col">
+
+    <div class="box amber">
+      <h2>Inne ważne przyimki</h2>
+      <table>
+        <tr><th>Przyimek</th><th>Znaczenie</th><th>Przykład</th></tr>
+        <tr><td><b>under</b></td><td class="pl">pod</td><td class="en">under the table</td></tr>
+        <tr><td><b>over</b></td><td class="pl">nad</td><td class="en">over the bridge</td></tr>
+        <tr><td><b>above</b></td><td class="pl">ponad</td><td class="en">above the clouds</td></tr>
+        <tr><td><b>below</b></td><td class="pl">poniżej</td><td class="en">below zero</td></tr>
+        <tr><td><b>between</b></td><td class="pl">między (2)</td><td class="en">between us</td></tr>
+        <tr><td><b>among</b></td><td class="pl">wśród (wiele)</td><td class="en">among friends</td></tr>
+        <tr><td><b>behind</b></td><td class="pl">za</td><td class="en">behind the house</td></tr>
+        <tr><td><b>in front of</b></td><td class="pl">przed</td><td class="en">in front of the shop</td></tr>
+        <tr><td><b>next to / beside</b></td><td class="pl">obok</td><td class="en">next to me</td></tr>
+        <tr><td><b>near</b></td><td class="pl">blisko</td><td class="en">near the park</td></tr>
+        <tr><td><b>opposite</b></td><td class="pl">naprzeciwko</td><td class="en">opposite the bank</td></tr>
+        <tr><td><b>through</b></td><td class="pl">przez środek</td><td class="en">through the tunnel</td></tr>
+        <tr><td><b>across</b></td><td class="pl">przez (na drugą)</td><td class="en">across the street</td></tr>
+        <tr><td><b>along</b></td><td class="pl">wzdłuż</td><td class="en">along the river</td></tr>
+      </table>
+    </div>
+
+    <div class="box teal">
+      <h2>Czasownik + przyimek</h2>
+      <table>
+        <tr><th>Angielski</th><th>Polski</th></tr>
+        <tr><td class="en">depend on</td><td class="pl">zależeć od</td></tr>
+        <tr><td class="en">wait for</td><td class="pl">czekać na</td></tr>
+        <tr><td class="en">listen to</td><td class="pl">słuchać</td></tr>
+        <tr><td class="en">look at</td><td class="pl">patrzeć na</td></tr>
+        <tr><td class="en">look for</td><td class="pl">szukać</td></tr>
+        <tr><td class="en">look after</td><td class="pl">opiekować się</td></tr>
+        <tr><td class="en">belong to</td><td class="pl">należeć do</td></tr>
+        <tr><td class="en">consist of</td><td class="pl">składać się z</td></tr>
+        <tr><td class="en">ask for</td><td class="pl">prosić o</td></tr>
+        <tr><td class="en">apologise for</td><td class="pl">przepraszać za</td></tr>
+        <tr><td class="en">succeed in</td><td class="pl">odnieść sukces w</td></tr>
+        <tr><td class="en">complain about</td><td class="pl">skarżyć się na</td></tr>
+        <tr><td class="en">think about / of</td><td class="pl">myśleć o</td></tr>
+        <tr><td class="en">agree with</td><td class="pl">zgadzać się z</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ===================== PODSTAWY ===================== -->
+<div class="tab-content" id="tab-podstawy">
+
+  <div class="grid-3col">
+
+    <div class="box">
+      <h2>Kolory</h2>
+      <table>
+        <tr><td class="en">red</td><td class="pl">czerwony</td></tr>
+        <tr><td class="en">blue</td><td class="pl">niebieski</td></tr>
+        <tr><td class="en">green</td><td class="pl">zielony</td></tr>
+        <tr><td class="en">yellow</td><td class="pl">żółty</td></tr>
+        <tr><td class="en">black</td><td class="pl">czarny</td></tr>
+        <tr><td class="en">white</td><td class="pl">biały</td></tr>
+        <tr><td class="en">orange</td><td class="pl">pomarańczowy</td></tr>
+        <tr><td class="en">purple</td><td class="pl">fioletowy</td></tr>
+        <tr><td class="en">pink</td><td class="pl">różowy</td></tr>
+        <tr><td class="en">brown</td><td class="pl">brązowy</td></tr>
+        <tr><td class="en">grey / gray</td><td class="pl">szary</td></tr>
+      </table>
+    </div>
+
+    <div class="box green">
+      <h2>Dni tygodnia</h2>
+      <table>
+        <tr><td class="en">Monday</td><td class="pl">poniedziałek</td></tr>
+        <tr><td class="en">Tuesday</td><td class="pl">wtorek</td></tr>
+        <tr><td class="en">Wednesday</td><td class="pl">środa</td></tr>
+        <tr><td class="en">Thursday</td><td class="pl">czwartek</td></tr>
+        <tr><td class="en">Friday</td><td class="pl">piątek</td></tr>
+        <tr><td class="en">Saturday</td><td class="pl">sobota</td></tr>
+        <tr><td class="en">Sunday</td><td class="pl">niedziela</td></tr>
+      </table>
+      <p class="mini" style="margin-top:6px;"><b>Uwaga:</b> dni piszemy <b>wielką literą</b>!</p>
+    </div>
+
+    <div class="box amber">
+      <h2>Miesiące</h2>
+      <table>
+        <tr><td class="en">January</td><td class="pl">styczeń</td></tr>
+        <tr><td class="en">February</td><td class="pl">luty</td></tr>
+        <tr><td class="en">March</td><td class="pl">marzec</td></tr>
+        <tr><td class="en">April</td><td class="pl">kwiecień</td></tr>
+        <tr><td class="en">May</td><td class="pl">maj</td></tr>
+        <tr><td class="en">June</td><td class="pl">czerwiec</td></tr>
+        <tr><td class="en">July</td><td class="pl">lipiec</td></tr>
+        <tr><td class="en">August</td><td class="pl">sierpień</td></tr>
+        <tr><td class="en">September</td><td class="pl">wrzesień</td></tr>
+        <tr><td class="en">October</td><td class="pl">październik</td></tr>
+        <tr><td class="en">November</td><td class="pl">listopad</td></tr>
+        <tr><td class="en">December</td><td class="pl">grudzień</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="grid-3col">
+
+    <div class="box purple">
+      <h2>Rodzina</h2>
+      <table>
+        <tr><td class="en">mother</td><td class="pl">matka</td></tr>
+        <tr><td class="en">father</td><td class="pl">ojciec</td></tr>
+        <tr><td class="en">parents</td><td class="pl">rodzice</td></tr>
+        <tr><td class="en">son / daughter</td><td class="pl">syn / córka</td></tr>
+        <tr><td class="en">brother / sister</td><td class="pl">brat / siostra</td></tr>
+        <tr><td class="en">grandmother</td><td class="pl">babcia</td></tr>
+        <tr><td class="en">grandfather</td><td class="pl">dziadek</td></tr>
+        <tr><td class="en">aunt / uncle</td><td class="pl">ciocia / wujek</td></tr>
+        <tr><td class="en">cousin</td><td class="pl">kuzyn/ka</td></tr>
+        <tr><td class="en">wife / husband</td><td class="pl">żona / mąż</td></tr>
+      </table>
+    </div>
+
+    <div class="box teal">
+      <h2>Pogoda</h2>
+      <table>
+        <tr><td class="en">sunny</td><td class="pl">słonecznie</td></tr>
+        <tr><td class="en">rainy</td><td class="pl">deszczowo</td></tr>
+        <tr><td class="en">cloudy</td><td class="pl">pochmurnie</td></tr>
+        <tr><td class="en">windy</td><td class="pl">wietrznie</td></tr>
+        <tr><td class="en">snowy</td><td class="pl">śnieżnie</td></tr>
+        <tr><td class="en">foggy</td><td class="pl">mgliście</td></tr>
+        <tr><td class="en">warm</td><td class="pl">ciepło</td></tr>
+        <tr><td class="en">cold</td><td class="pl">zimno</td></tr>
+        <tr><td class="en">hot</td><td class="pl">gorąco</td></tr>
+        <tr><td class="en">It's raining.</td><td class="pl">Pada deszcz.</td></tr>
+      </table>
+    </div>
+
+    <div class="box rose">
+      <h2>Emocje</h2>
+      <table>
+        <tr><td class="en">happy</td><td class="pl">szczęśliwy</td></tr>
+        <tr><td class="en">sad</td><td class="pl">smutny</td></tr>
+        <tr><td class="en">angry</td><td class="pl">zły</td></tr>
+        <tr><td class="en">tired</td><td class="pl">zmęczony</td></tr>
+        <tr><td class="en">excited</td><td class="pl">podekscytowany</td></tr>
+        <tr><td class="en">scared</td><td class="pl">przestraszony</td></tr>
+        <tr><td class="en">surprised</td><td class="pl">zaskoczony</td></tr>
+        <tr><td class="en">bored</td><td class="pl">znudzony</td></tr>
+        <tr><td class="en">nervous</td><td class="pl">zdenerwowany</td></tr>
+        <tr><td class="en">proud</td><td class="pl">dumny</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="grid-3col">
+
+    <div class="box green">
+      <h2>Kraje i narodowości</h2>
+      <table>
+        <tr><th>Kraj</th><th>Narodowość</th></tr>
+        <tr><td class="en">Poland</td><td class="en">Polish</td></tr>
+        <tr><td class="en">England</td><td class="en">English</td></tr>
+        <tr><td class="en">Germany</td><td class="en">German</td></tr>
+        <tr><td class="en">France</td><td class="en">French</td></tr>
+        <tr><td class="en">Spain</td><td class="en">Spanish</td></tr>
+        <tr><td class="en">Italy</td><td class="en">Italian</td></tr>
+        <tr><td class="en">the USA</td><td class="en">American</td></tr>
+        <tr><td class="en">China</td><td class="en">Chinese</td></tr>
+      </table>
+    </div>
+
+    <div class="box amber">
+      <h2>Ciało i zdrowie</h2>
+      <table>
+        <tr><td class="en">head</td><td class="pl">głowa</td></tr>
+        <tr><td class="en">hand / arm</td><td class="pl">ręka</td></tr>
+        <tr><td class="en">leg / foot</td><td class="pl">noga / stopa</td></tr>
+        <tr><td class="en">eye / ear</td><td class="pl">oko / ucho</td></tr>
+        <tr><td class="en">heart</td><td class="pl">serce</td></tr>
+        <tr><td class="en">stomach</td><td class="pl">brzuch</td></tr>
+        <tr><td class="en">I have a headache.</td><td class="pl">Boli mnie głowa.</td></tr>
+        <tr><td class="en">I don't feel well.</td><td class="pl">Źle się czuję.</td></tr>
+      </table>
+    </div>
+
+    <div class="box purple">
+      <h2>Jedzenie i picie</h2>
+      <table>
+        <tr><td class="en">bread</td><td class="pl">chleb</td></tr>
+        <tr><td class="en">meat</td><td class="pl">mięso</td></tr>
+        <tr><td class="en">fish</td><td class="pl">ryba</td></tr>
+        <tr><td class="en">vegetables</td><td class="pl">warzywa</td></tr>
+        <tr><td class="en">fruit</td><td class="pl">owoce</td></tr>
+        <tr><td class="en">water</td><td class="pl">woda</td></tr>
+        <tr><td class="en">coffee / tea</td><td class="pl">kawa / herbata</td></tr>
+        <tr><td class="en">juice</td><td class="pl">sok</td></tr>
+        <tr><td class="en">milk</td><td class="pl">mleko</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="box teal">
+    <h2>Zwroty grzecznościowe</h2>
+    <div class="grid-2col">
+      <table>
+        <tr><td class="en">Hello / Hi</td><td class="pl">Cześć</td></tr>
+        <tr><td class="en">Good morning</td><td class="pl">Dzień dobry (rano)</td></tr>
+        <tr><td class="en">Good afternoon</td><td class="pl">Dzień dobry (popołudnie)</td></tr>
+        <tr><td class="en">Good evening</td><td class="pl">Dobry wieczór</td></tr>
+        <tr><td class="en">Goodbye / Bye</td><td class="pl">Do widzenia / Cześć</td></tr>
+        <tr><td class="en">Good night</td><td class="pl">Dobranoc</td></tr>
+        <tr><td class="en">Please</td><td class="pl">Proszę</td></tr>
+        <tr><td class="en">Thank you / Thanks</td><td class="pl">Dziękuję</td></tr>
+      </table>
+      <table>
+        <tr><td class="en">Sorry</td><td class="pl">Przepraszam</td></tr>
+        <tr><td class="en">Excuse me</td><td class="pl">Przepraszam (zagajenie)</td></tr>
+        <tr><td class="en">You're welcome</td><td class="pl">Nie ma za co</td></tr>
+        <tr><td class="en">How are you?</td><td class="pl">Jak się masz?</td></tr>
+        <tr><td class="en">Nice to meet you</td><td class="pl">Miło mi</td></tr>
+        <tr><td class="en">See you later</td><td class="pl">Do zobaczenia</td></tr>
+        <tr><td class="en">Have a nice day!</td><td class="pl">Miłego dnia!</td></tr>
+        <tr><td class="en">Cheers! (GB)</td><td class="pl">Na zdrowie!</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===================== KONSTRUKCJE ===================== -->
+<div class="tab-content" id="tab-konstrukcje">
+
+  <div class="grid-2col">
+
+    <div class="box green">
+      <h2>THERE IS / THERE ARE</h2>
+      <p class="mini">„Jest / są" – gdy mówimy o istnieniu czegoś.</p>
+      <p class="mini en"><b>There is</b> a book on the table. <span class="pl">(l.poj.)</span></p>
+      <p class="mini en"><b>There are</b> two books on the table. <span class="pl">(l.mn.)</span></p>
+      <p class="mini" style="margin-top:6px;"><b>Przeczenie:</b></p>
+      <p class="mini en">There isn't a book. / There aren't any books.</p>
+      <p class="mini"><b>Pytanie:</b></p>
+      <p class="mini en">Is there a book? / Are there any books?</p>
+      <p class="mini" style="margin-top:6px;"><b>Przeszłość:</b></p>
+      <p class="mini en">There was a book. / There were two books.</p>
+    </div>
+
+    <div class="box purple">
+      <h2>HAVE GOT / HAS GOT</h2>
+      <p class="mini">„Mam, masz, ma" – brytyjskie, potoczne.</p>
+      <p class="mini en">I <b>have got</b> a car. <span class="pl">(Mam samochód)</span></p>
+      <p class="mini en">She <b>has got</b> a cat. <span class="pl">(Ona ma kota)</span></p>
+      <p class="mini" style="margin-top:6px;"><b>Przeczenie:</b></p>
+      <p class="mini en">I <b>haven't got</b> a car.</p>
+      <p class="mini en">She <b>hasn't got</b> a cat.</p>
+      <p class="mini"><b>Pytanie:</b></p>
+      <p class="mini en"><b>Have</b> you <b>got</b> a car? / <b>Has</b> she <b>got</b> a cat?</p>
+    </div>
+
+  </div>
+
+  <div class="grid-2col">
+
+    <div class="box amber">
+      <h2>TOO / ENOUGH</h2>
+      <p class="mini"><b>TOO + przymiotnik</b> = zbyt:</p>
+      <p class="mini en">It's <b>too</b> hot. <span class="pl">(Za gorąco)</span></p>
+      <p class="mini en">He's <b>too</b> young. <span class="pl">(Za młody)</span></p>
+      <p class="mini" style="margin-top:6px;"><b>przymiotnik + ENOUGH</b> = wystarczająco:</p>
+      <p class="mini en">He's <b>old enough</b>. <span class="pl">(Dość dorosły)</span></p>
+      <p class="mini en">It's <b>warm enough</b>. <span class="pl">(Dość ciepło)</span></p>
+      <p class="mini" style="margin-top:6px;"><b>ENOUGH + rzeczownik:</b></p>
+      <p class="mini en">I have <b>enough money</b>. <span class="pl">(Mam dość pieniędzy)</span></p>
+    </div>
+
+    <div class="box rose">
+      <h2>SO / SUCH</h2>
+      <p class="mini"><b>SO + przymiotnik/przysłówek:</b></p>
+      <p class="mini en">It's <b>so</b> hot! <span class="pl">(Tak gorąco!)</span></p>
+      <p class="mini en">She speaks <b>so</b> fast. <span class="pl">(Mówi tak szybko)</span></p>
+      <p class="mini" style="margin-top:6px;"><b>SUCH + rzeczownik:</b></p>
+      <p class="mini en">It's <b>such</b> a hot day! <span class="pl">(Taki gorący dzień!)</span></p>
+      <p class="mini en">They're <b>such</b> nice people.</p>
+    </div>
+
+  </div>
+
+  <div class="grid-2col">
+
+    <div class="box teal">
+      <h2>USED TO</h2>
+      <p class="mini">Dawne zwyczaje, które już nie trwają.</p>
+      <p class="mini en">I <b>used to</b> play football. <span class="pl">(Kiedyś grałem)</span></p>
+      <p class="mini en">She <b>used to</b> live in London.</p>
+      <p class="mini" style="margin-top:6px;"><b>Przeczenie:</b></p>
+      <p class="mini en">I <b>didn't use to</b> like coffee.</p>
+      <p class="mini"><b>Pytanie:</b></p>
+      <p class="mini en"><b>Did</b> you <b>use to</b> play?</p>
+    </div>
+
+    <div class="box green">
+      <h2>BE GOING TO</h2>
+      <p class="mini">Zamiar, plan:</p>
+      <p class="mini en">I <b>am going to</b> study tonight.</p>
+      <p class="mini en">She <b>is going to</b> buy a car.</p>
+      <p class="mini">Przewidywanie na podstawie oznak:</p>
+      <p class="mini en">Look at the clouds! It's <b>going to</b> rain.</p>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ===================== PYTANIA ===================== -->
+<div class="tab-content" id="tab-pytania">
+
+  <div class="grid-2col">
+
+    <div class="box green">
+      <h2>Pytania ogólne (Yes/No)</h2>
+      <p class="mini">Zaczynają się od operatora:</p>
+      <table>
+        <tr><th>Czas</th><th>Pytanie</th></tr>
+        <tr><td>Present Simple</td><td class="en">Do you work?</td></tr>
+        <tr><td>Present Cont.</td><td class="en">Are you working?</td></tr>
+        <tr><td>Past Simple</td><td class="en">Did you work?</td></tr>
+        <tr><td>Past Cont.</td><td class="en">Were you working?</td></tr>
+        <tr><td>Present Perfect</td><td class="en">Have you worked?</td></tr>
+        <tr><td>Future</td><td class="en">Will you work?</td></tr>
+        <tr><td>Modal</td><td class="en">Can you help?</td></tr>
+      </table>
+    </div>
+
+    <div class="box purple">
+      <h2>Pytania Wh-</h2>
+      <p class="mini">Zaczynają się od słowa pytającego:</p>
+      <table>
+        <tr><td class="en"><b>What</b></td><td class="pl">co / jaki</td></tr>
+        <tr><td class="en"><b>Where</b></td><td class="pl">gdzie</td></tr>
+        <tr><td class="en"><b>When</b></td><td class="pl">kiedy</td></tr>
+        <tr><td class="en"><b>Why</b></td><td class="pl">dlaczego</td></tr>
+        <tr><td class="en"><b>Who</b></td><td class="pl">kto</td></tr>
+        <tr><td class="en"><b>Whose</b></td><td class="pl">czyj</td></tr>
+        <tr><td class="en"><b>Which</b></td><td class="pl">który</td></tr>
+        <tr><td class="en"><b>How</b></td><td class="pl">jak</td></tr>
+        <tr><td class="en"><b>How much / many</b></td><td class="pl">ile</td></tr>
+        <tr><td class="en"><b>How long</b></td><td class="pl">jak długo</td></tr>
+        <tr><td class="en"><b>How often</b></td><td class="pl">jak często</td></tr>
+      </table>
+      <p class="mini" style="margin-top:6px;"><b>Budowa:</b> <span class="en">Wh- + operator + podmiot + czasownik?</span></p>
+      <p class="mini en">Where <b>do</b> you live?</p>
+      <p class="mini en">What <b>are</b> you doing?</p>
+    </div>
+
+  </div>
+
+  <div class="grid-2col">
+
+    <div class="box amber">
+      <h2>Tag questions (pytania ogonkowe)</h2>
+      <p class="mini">Krótkie pytania na końcu zdania.</p>
+      <p class="mini"><b>Zasada:</b> twierdzenie → przeczenie, przeczenie → twierdzenie.</p>
+      <table>
+        <tr><td class="en">You're Polish, <b>aren't you</b>?</td></tr>
+        <tr><td class="en">She works here, <b>doesn't she</b>?</td></tr>
+        <tr><td class="en">He can swim, <b>can't he</b>?</td></tr>
+        <tr><td class="en">They went home, <b>didn't they</b>?</td></tr>
+        <tr><td class="en">You don't smoke, <b>do you</b>?</td></tr>
+        <tr><td class="en">She isn't late, <b>is she</b>?</td></tr>
+        <tr><td class="en">Let's go, <b>shall we</b>?</td></tr>
+      </table>
+    </div>
+
+    <div class="box rose">
+      <h2>Indirect questions (pytania zależne)</h2>
+      <p class="mini">Uprzejme pytania – <b>bez inwersji</b>, jak w zdaniu twierdzącym.</p>
+      <p class="mini"><b>Bezpośrednie:</b> <span class="en">Where is the station?</span></p>
+      <p class="mini"><b>Pośrednie:</b> <span class="en">Could you tell me where the station <b>is</b>?</span></p>
+      <p class="mini" style="margin-top:6px;"><b>Przykłady:</b></p>
+      <p class="mini en">Do you know <b>what time it is</b>?</p>
+      <p class="mini en">Can you tell me <b>how to get there</b>?</p>
+      <p class="mini en">I wonder <b>if she's coming</b>.</p>
+      <p class="mini en">I don't know <b>where he lives</b>.</p>
+    </div>
+
+  </div>
+
+  <div class="box teal">
+    <h2>Question words – szczegóły</h2>
+    <div class="grid-2col">
+      <p class="mini"><b>What</b> – ogólnie: What is this? (Co to jest?)</p>
+      <p class="mini"><b>Which</b> – wybór: Which one? (Który z nich?)</p>
+      <p class="mini"><b>Who</b> – podmiot: Who called? (Kto dzwonił?)</p>
+      <p class="mini"><b>Whom</b> – dopełnienie (formalne): Whom did you see?</p>
+      <p class="mini"><b>How</b> + przymiotnik: How old? How tall? How big?</p>
+      <p class="mini"><b>How far</b> – jak daleko</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===================== ROZMÓWKI ===================== -->
+<div class="tab-content" id="tab-rozmowki">
+
+  <div class="grid-2col">
+
+    <div class="box green">
+      <h2>🍽 W restauracji</h2>
+      <table>
+        <tr><td class="en">A table for two, please.</td><td class="pl">Stolik dla dwóch, proszę.</td></tr>
+        <tr><td class="en">Can I see the menu?</td><td class="pl">Czy mogę zobaczyć menu?</td></tr>
+        <tr><td class="en">I'd like…</td><td class="pl">Chciałbym…</td></tr>
+        <tr><td class="en">What do you recommend?</td><td class="pl">Co pan/pani poleca?</td></tr>
+        <tr><td class="en">Is this dish spicy?</td><td class="pl">Czy to danie jest ostre?</td></tr>
+        <tr><td class="en">The bill, please.</td><td class="pl">Rachunek poproszę.</td></tr>
+        <tr><td class="en">Can I pay by card?</td><td class="pl">Mogę zapłacić kartą?</td></tr>
+        <tr><td class="en">Keep the change.</td><td class="pl">Resztę proszę zatrzymać.</td></tr>
+      </table>
+    </div>
+
+    <div class="box purple">
+      <h2>🛒 W sklepie</h2>
+      <table>
+        <tr><td class="en">How much is it?</td><td class="pl">Ile to kosztuje?</td></tr>
+        <tr><td class="en">How much does it cost?</td><td class="pl">Ile kosztuje?</td></tr>
+        <tr><td class="en">Do you have this in a different size?</td><td class="pl">Czy jest w innym rozmiarze?</td></tr>
+        <tr><td class="en">Can I try it on?</td><td class="pl">Mogę to przymierzyć?</td></tr>
+        <tr><td class="en">I'm just looking, thanks.</td><td class="pl">Tylko oglądam, dziękuję.</td></tr>
+        <tr><td class="en">I'll take it.</td><td class="pl">Biorę to.</td></tr>
+        <tr><td class="en">Do you take card?</td><td class="pl">Przyjmujecie karty?</td></tr>
+        <tr><td class="en">Can I have a receipt?</td><td class="pl">Czy mogę dostać paragon?</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="grid-2col">
+
+    <div class="box rose">
+      <h2>👨‍⚕️ U lekarza</h2>
+      <table>
+        <tr><td class="en">I don't feel well.</td><td class="pl">Źle się czuję.</td></tr>
+        <tr><td class="en">I have a headache.</td><td class="pl">Boli mnie głowa.</td></tr>
+        <tr><td class="en">I have a sore throat.</td><td class="pl">Boli mnie gardło.</td></tr>
+        <tr><td class="en">I have a fever.</td><td class="pl">Mam gorączkę.</td></tr>
+        <tr><td class="en">I've got a cold.</td><td class="pl">Jestem przeziębiony.</td></tr>
+        <tr><td class="en">I need a doctor.</td><td class="pl">Potrzebuję lekarza.</td></tr>
+        <tr><td class="en">Where does it hurt?</td><td class="pl">Co boli?</td></tr>
+        <tr><td class="en">Take this medicine.</td><td class="pl">Proszę wziąć to lekarstwo.</td></tr>
+      </table>
+    </div>
+
+    <div class="box teal">
+      <h2>✈️ Na lotnisku / w podróży</h2>
+      <table>
+        <tr><td class="en">Where is the check-in?</td><td class="pl">Gdzie jest odprawa?</td></tr>
+        <tr><td class="en">Where is gate 5?</td><td class="pl">Gdzie jest bramka 5?</td></tr>
+        <tr><td class="en">My flight is delayed.</td><td class="pl">Mój lot jest opóźniony.</td></tr>
+        <tr><td class="en">A ticket to London, please.</td><td class="pl">Bilet do Londynu, proszę.</td></tr>
+        <tr><td class="en">One way / return</td><td class="pl">W jedną stronę / powrotny</td></tr>
+        <tr><td class="en">What time does it leave?</td><td class="pl">O której odjeżdża?</td></tr>
+        <tr><td class="en">Where is the luggage?</td><td class="pl">Gdzie jest bagaż?</td></tr>
+        <tr><td class="en">I lost my passport.</td><td class="pl">Zgubiłem paszport.</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="grid-2col">
+
+    <div class="box amber">
+      <h2>🚶 Pytanie o drogę</h2>
+      <table>
+        <tr><td class="en">Excuse me, where is…?</td><td class="pl">Przepraszam, gdzie jest…?</td></tr>
+        <tr><td class="en">How do I get to…?</td><td class="pl">Jak dostać się do…?</td></tr>
+        <tr><td class="en">Is it far?</td><td class="pl">Czy to daleko?</td></tr>
+        <tr><td class="en">Go straight on.</td><td class="pl">Idź prosto.</td></tr>
+        <tr><td class="en">Turn left / right.</td><td class="pl">Skręć w lewo / prawo.</td></tr>
+        <tr><td class="en">Take the first turning.</td><td class="pl">Pierwszy zjazd.</td></tr>
+        <tr><td class="en">It's on the corner.</td><td class="pl">To na rogu.</td></tr>
+        <tr><td class="en">It's about 5 minutes on foot.</td><td class="pl">Około 5 minut pieszo.</td></tr>
+      </table>
+    </div>
+
+    <div class="box green">
+      <h2>☎️ Przez telefon</h2>
+      <table>
+        <tr><td class="en">Hello, can I speak to…?</td><td class="pl">Halo, czy mogę rozmawiać z…?</td></tr>
+        <tr><td class="en">Who's calling?</td><td class="pl">Kto dzwoni?</td></tr>
+        <tr><td class="en">Hold on, please.</td><td class="pl">Proszę czekać.</td></tr>
+        <tr><td class="en">I'll call you back.</td><td class="pl">Oddzwonię.</td></tr>
+        <tr><td class="en">Sorry, wrong number.</td><td class="pl">Przepraszam, pomyłka.</td></tr>
+        <tr><td class="en">Can I leave a message?</td><td class="pl">Czy mogę zostawić wiadomość?</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ===================== IDIOMY ===================== -->
+<div class="tab-content" id="tab-idiomy">
+
+  <div class="grid-2col">
+
+    <div class="box purple">
+      <h2>Idiomy – must-know</h2>
+      <table>
+        <tr><td class="en">a piece of cake</td><td class="pl">bułka z masłem</td></tr>
+        <tr><td class="en">break the ice</td><td class="pl">przełamać lody</td></tr>
+        <tr><td class="en">hit the books</td><td class="pl">wziąć się do nauki</td></tr>
+        <tr><td class="en">under the weather</td><td class="pl">w słabszej formie</td></tr>
+        <tr><td class="en">once in a blue moon</td><td class="pl">raz na ruski rok</td></tr>
+        <tr><td class="en">the ball is in your court</td><td class="pl">twoja kolej</td></tr>
+        <tr><td class="en">bite the bullet</td><td class="pl">zacisnąć zęby</td></tr>
+        <tr><td class="en">cut corners</td><td class="pl">iść na skróty</td></tr>
+        <tr><td class="en">cut to the chase</td><td class="pl">przejść do rzeczy</td></tr>
+        <tr><td class="en">on the same page</td><td class="pl">zgodni</td></tr>
+        <tr><td class="en">call it a day</td><td class="pl">skończyć na dziś</td></tr>
+        <tr><td class="en">hit the sack</td><td class="pl">iść spać</td></tr>
+        <tr><td class="en">pull someone's leg</td><td class="pl">nabierać kogoś</td></tr>
+        <tr><td class="en">let the cat out of the bag</td><td class="pl">wygadać się</td></tr>
+      </table>
+    </div>
+
+    <div class="box rose">
+      <h2>Phrasal verbs (B2/C1)</h2>
+      <table>
+        <tr><td class="en">put off</td><td class="pl">odkładać</td></tr>
+        <tr><td class="en">bring up</td><td class="pl">wychować / poruszyć</td></tr>
+        <tr><td class="en">carry out</td><td class="pl">przeprowadzać</td></tr>
+        <tr><td class="en">come up with</td><td class="pl">wymyślić</td></tr>
+        <tr><td class="en">look forward to</td><td class="pl">nie móc się doczekać</td></tr>
+        <tr><td class="en">look up to</td><td class="pl">podziwiać</td></tr>
+        <tr><td class="en">look down on</td><td class="pl">patrzeć z góry</td></tr>
+        <tr><td class="en">get away with</td><td class="pl">ujść na sucho</td></tr>
+        <tr><td class="en">get on with</td><td class="pl">dogadywać się</td></tr>
+        <tr><td class="en">give in</td><td class="pl">ustąpić</td></tr>
+        <tr><td class="en">put up with</td><td class="pl">znosić</td></tr>
+        <tr><td class="en">make up for</td><td class="pl">wynagrodzić</td></tr>
+        <tr><td class="en">take up</td><td class="pl">zacząć (hobby)</td></tr>
+        <tr><td class="en">turn out</td><td class="pl">okazać się</td></tr>
+      </table>
+    </div>
+
+  </div>
+
+  <div class="grid-2col">
+
+    <div class="box slate">
+      <h2>Łączniki – dyskurs</h2>
+      <table>
+        <tr><td class="en"><b>However</b></td><td class="pl">jednakże</td></tr>
+        <tr><td class="en"><b>Nevertheless</b></td><td class="pl">niemniej jednak</td></tr>
+        <tr><td class="en"><b>Therefore</b></td><td class="pl">dlatego</td></tr>
+        <tr><td class="en"><b>Moreover</b></td><td class="pl">co więcej</td></tr>
+        <tr><td class="en"><b>Furthermore</b></td><td class="pl">ponadto</td></tr>
+        <tr><td class="en"><b>Despite / In spite of</b></td><td class="pl">mimo że</td></tr>
+        <tr><td class="en"><b>Although / Even though</b></td><td class="pl">chociaż</td></tr>
+        <tr><td class="en"><b>Whereas / While</b></td><td class="pl">podczas gdy</td></tr>
+        <tr><td class="en"><b>As a result</b></td><td class="pl">w rezultacie</td></tr>
+        <tr><td class="en"><b>On the other hand</b></td><td class="pl">z drugiej strony</td></tr>
+      </table>
+    </div>
+
+    <div class="box green">
+      <h2>Zwroty do pisania</h2>
+      <p class="mini"><b>Wstęp:</b></p>
+      <p class="mini en">It is often argued that… / Nowadays, it is widely believed that…</p>
+      <p class="mini"><b>Argument za:</b></p>
+      <p class="mini en">One of the main advantages is… / Proponents claim that…</p>
+      <p class="mini"><b>Argument przeciw:</b></p>
+      <p class="mini en">On the other hand… / Critics argue that… / Nevertheless…</p>
+      <p class="mini"><b>Opinia:</b></p>
+      <p class="mini en">In my view… / From my perspective… / I would argue that…</p>
+      <p class="mini"><b>Wniosek:</b></p>
+      <p class="mini en">All things considered… / Taking everything into account…</p>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- POPUP SŁOWNIKA -->
+<div id="wordPopup" class="word-popup hidden"></div>
+
+<script>
+/* ============================================================
+   1. ZAKŁADKI
+============================================================ */
+(function() {
+  const tabs = document.querySelectorAll(".tab-btn");
+  const contents = document.querySelectorAll(".tab-content");
+
+  function switchTab(tabName) {
+    contents.forEach(c => c.classList.remove("active"));
+    tabs.forEach(t => t.classList.remove("active"));
+
+    const content = document.getElementById("tab-" + tabName);
+    const btn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+    if (content) content.classList.add("active");
+    if (btn) btn.classList.add("active");
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setTimeout(processActiveTab, 50);
+  }
+
+  tabs.forEach(tab => {
+    tab.onclick = () => switchTab(tab.dataset.tab);
+  });
+
+  window.switchTab = switchTab;
+})();
+
+/* ============================================================
+   2. ODSŁUCH + KLIKALNE SŁOWA + POPUP
+============================================================ */
+let sciagawkaVoices = { en: null, pl: null };
+
+function sciagawkaLoadVoices() {
+  const all = speechSynthesis.getVoices();
+  const isBad = v => {
+    const n = (v.name || "").toLowerCase();
+    return n.includes("child") || n.includes("kid") || n.includes("junior");
+  };
+  const en = all.find(v => v.lang === "en-US" && !isBad(v))
+          || all.find(v => v.lang === "en-GB" && !isBad(v))
+          || all.find(v => v.lang.toLowerCase().startsWith("en") && !isBad(v));
+  const pl = all.find(v => v.lang.toLowerCase().startsWith("pl") && !isBad(v));
+  sciagawkaVoices.en = en || null;
+  sciagawkaVoices.pl = pl || null;
+}
+
+function sciagawkaSpeak(text) {
+  speechSynthesis.cancel();
+  if (!text) return;
+  const isPl = /[ąćęłńóśźż]/i.test(text);
+  const u = new SpeechSynthesisUtterance(text);
+  const rateEl = document.getElementById("rateMini");
+  u.rate = rateEl ? parseFloat(rateEl.value) : 1;
+
+  if (isPl && sciagawkaVoices.pl) {
+    u.voice = sciagawkaVoices.pl;
+    u.lang = sciagawkaVoices.pl.lang;
+  } else if (!isPl && sciagawkaVoices.en) {
+    u.voice = sciagawkaVoices.en;
+    u.lang = sciagawkaVoices.en.lang;
+  } else {
+    u.lang = isPl ? "pl-PL" : "en-US";
+  }
+  speechSynthesis.speak(u);
+}
+
+function sciagawkaSpeakAll(sentences) {
+  speechSynthesis.cancel();
+  const rateEl = document.getElementById("rateMini");
+  const rate = rateEl ? parseFloat(rateEl.value) : 1;
+  sentences.forEach(s => {
+    const isPl = /[ąćęłńóśźż]/i.test(s);
+    const u = new SpeechSynthesisUtterance(s);
+    u.rate = rate;
+    if (isPl && sciagawkaVoices.pl) { u.voice = sciagawkaVoices.pl; u.lang = sciagawkaVoices.pl.lang; }
+    else if (!isPl && sciagawkaVoices.en) { u.voice = sciagawkaVoices.en; u.lang = sciagawkaVoices.en.lang; }
+    else { u.lang = isPl ? "pl-PL" : "en-US"; }
+    speechSynthesis.speak(u);
+  });
+}
+
+/* --- POPUP --- */
+function showPopup(word, x, y) {
+  const popup = document.getElementById("wordPopup");
+  const googleUrl = "https://translate.google.com/?sl=en&tl=pl&text=" +
+                    encodeURIComponent(word) + "&op=translate";
+  popup.innerHTML = `
+    <div class="wp-word">${word}</div>
+    <div class="wp-buttons">
+      <button data-a="en">🔊 EN</button>
+      <a class="google" href="${googleUrl}" target="_blank" rel="noopener">🌐 Google</a>
+      <button class="save" data-a="save">💾</button>
+    </div>
+  `;
+  popup.classList.remove("hidden");
+
+  const W = popup.offsetWidth || 220;
+  const H = popup.offsetHeight || 100;
+  let px = x + 12, py = y + 12;
+  if (px + W > window.innerWidth - 10)  px = x - W - 12;
+  if (py + H > window.innerHeight - 10) py = y - H - 12;
+  if (px < 10) px = 10;
+  if (py < 10) py = 10;
+  popup.style.left = px + "px";
+  popup.style.top = py + "px";
+
+  popup.querySelector('[data-a="en"]').onclick = () => sciagawkaSpeak(word);
+  popup.querySelector('[data-a="save"]').onclick = () => {
+    try {
+      const saved = JSON.parse(localStorage.getItem("sciagawkaDict") || "[]");
+      if (!saved.some(w => w.en.toLowerCase() === word.toLowerCase())) {
+        saved.push({ en: word, pl: "" });
+        localStorage.setItem("sciagawkaDict", JSON.stringify(saved));
+        alert("Zapisano: " + word);
+      } else {
+        alert("Już zapisane");
+      }
+    } catch (e) { alert("Błąd zapisu"); }
+    popup.classList.add("hidden");
+  };
+}
+
+document.addEventListener("click", e => {
+  const popup = document.getElementById("wordPopup");
+  if (popup && !popup.classList.contains("hidden") && !popup.contains(e.target)) {
+    popup.classList.add("hidden");
+  }
+});
+
+/* --- KLIKALNE SŁOWA --- */
+function makeWordsClickable(root) {
+  if (!root) return;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  let node;
+  while ((node = walker.nextNode())) {
+    if (node.parentElement.closest("button, a, .word, .tab-btn, .print-btn, .audio-bar")) continue;
+    if (node.nodeValue && node.nodeValue.trim()) textNodes.push(node);
+  }
+
+  textNodes.forEach(textNode => {
+    const tokens = textNode.nodeValue.split(/(\s+)/);
+    const frag = document.createDocumentFragment();
+    tokens.forEach(tok => {
+      if (/^\s+$/.test(tok)) {
+        frag.appendChild(document.createTextNode(tok));
+        return;
+      }
+      const clean = tok.replace(/[^\p{L}'’-]/gu, "");
+      if (!clean || clean.length < 2) {
+        frag.appendChild(document.createTextNode(tok));
+        return;
+      }
+      const span = document.createElement("span");
+      span.className = "word";
+      span.textContent = tok;
+      span.dataset.word = clean;
+      span.onclick = (e) => {
+        e.stopPropagation();
+        document.querySelectorAll(".word.speaking").forEach(el => el.classList.remove("speaking"));
+        span.classList.add("speaking");
+        sciagawkaSpeak(clean);
+        showPopup(clean, e.clientX, e.clientY);
+        setTimeout(() => span.classList.remove("speaking"), 1200);
+      };
+      frag.appendChild(span);
+    });
+    textNode.parentNode.replaceChild(frag, textNode);
+  });
+}
+
+/* --- PASEK AUDIO --- */
+function addAudioBars() {
+  document.querySelectorAll(".tab-content").forEach(tab => {
+    if (tab.querySelector(".audio-bar")) return;
+    const bar = document.createElement("div");
+    bar.className = "audio-bar";
+    bar.innerHTML = `
+      <button data-a="read">▶ Czytaj wszystko</button>
+      <button data-a="stop">⏹ Stop</button>
+      <label class="rate-mini">Tempo
+        <input type="range" id="rateMini" min="0.5" max="1.5" step="0.1" value="1">
+      </label>
+    `;
+    tab.insertBefore(bar, tab.firstChild);
+  });
+
+  document.querySelectorAll(".audio-bar [data-a='read']").forEach(btn => {
+    btn.onclick = () => {
+      const tab = btn.closest(".tab-content");
+      const text = tab.innerText.replace(/\s+/g, " ").trim();
+      if (!text) return;
+      const sentences = text.split(/(?<=[.!?;:])\s+/).filter(s => s.trim());
+      sciagawkaSpeakAll(sentences);
+    };
+  });
+  document.querySelectorAll(".audio-bar [data-a='stop']").forEach(btn => {
+    btn.onclick = () => speechSynthesis.cancel();
+  });
+}
+
+function processActiveTab() {
+  const active = document.querySelector(".tab-content.active");
+  if (active) makeWordsClickable(active);
+}
+
+/* --- INIT --- */
+function sciagawkaInit() {
+  sciagawkaLoadVoices();
+  speechSynthesis.onvoiceschanged = sciagawkaLoadVoices;
+  setTimeout(sciagawkaLoadVoices, 300);
+  setTimeout(sciagawkaLoadVoices, 1000);
+
+  addAudioBars();
+  processActiveTab();
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", sciagawkaInit);
+} else {
+  sciagawkaInit();
+}
+</script>
+
+</body>
+</html>
